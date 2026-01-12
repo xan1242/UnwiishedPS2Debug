@@ -39,8 +39,8 @@ typedef enum
 typedef enum
 {
 	SASM_Normal,
-	SASM_TimeTrial,
-	SASM_CollectRing,
+	SASM_TimeAttack,
+	SASM_Survival,
 	SASM_DragoonBoss,
 	SASM_Boss,
 	SASM_Entrance,

@@ -259,10 +259,10 @@ const char* MDebugSelectEx_GetSettingName(int setting, int val)
 			{
 				case SASM_Normal:
 					return "Normal";
-				case SASM_TimeTrial:
-					return "TimeTrial";
-				case SASM_CollectRing:
-					return "CollectRing";
+				case SASM_TimeAttack:
+					return "TimeAttack";
+				case SASM_Survival:
+					return "Survival";
 				case SASM_DragoonBoss:
 					return "EggDragoon"; // no idea about this one...
 				case SASM_Boss:
