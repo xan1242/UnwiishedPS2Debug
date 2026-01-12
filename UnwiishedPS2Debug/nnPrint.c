@@ -7,13 +7,6 @@
 #include "nngPrintTexture.h"
 #include "nnFlushPrint.h"
 
-
-//
-// TODO TODO TODO something is HORRIBLY wrong here...
-// padding the data with debug prints eventually got the thing to work?? why?
-// for now -- do not remove the debug logs...
-//
-
 uintptr_t p_nnsPrintNum;
 uintptr_t p_nnsPrintMax;
 uintptr_t p_nnsPrintBuf;
@@ -105,8 +98,8 @@ void nnInitPrint(char* buffer, int max, void* printTex)
 	float smth1 = -unk_screenval_1 * unk_screenval_2;
 	float smth2 = -unk_screenval_3 * unk_screenval_4;
 
-	LOG("smth1 (hex): 0x%x\n", *(uint32_t*)&smth1);
-	LOG("smth2 (hex): 0x%x\n", *(uint32_t*)&smth2);
+	//LOG("smth1 (hex): 0x%x\n", *(uint32_t*)&smth1);
+	//LOG("smth2 (hex): 0x%x\n", *(uint32_t*)&smth2);
 
 	if (smth1 == -160.0f)
 		nnsPrintAspect.x = 16.0f * 0.5f;
@@ -124,7 +117,7 @@ void nnInitPrint(char* buffer, int max, void* printTex)
 	nnsPrint2d.x = 16.0 * (smth1 + 2048.0f);
 	nnsPrint2d.y = 16.0 * (smth2 + 2048.0f);
 	cb1 = PXSetupCB(nnsPrintSvrObj->cb_buf1, 0x90, 8);
-	LOG("PXSetupCB cb1 = 0x%x\n", cb1);
+	//LOG("PXSetupCB cb1 = 0x%x\n", cb1);
 	PXSetCB(cb1, 0, 8, 5);
 	PXSetCB(cb1, 1, 71, 0x5000D);
 	PXSetCB(cb1, 2, 78, *(uint64_t*)p_qword_768D10);
@@ -135,7 +128,7 @@ void nnInitPrint(char* buffer, int max, void* printTex)
 	PXSetCB(cb1, 7, 27, 86);
 
 	cb2 = PXSetupCB(nnsPrintSvrObj->cb_buf2, 0x30, 2);
-	LOG("PXSetupCB cb2 = 0x%x\n", cb2);
+	//LOG("PXSetupCB cb2 = 0x%x\n", cb2);
 }
 
 void nnExitPrint()
@@ -374,8 +367,8 @@ void nnPrint_Init()
 
 	FlushCache(INVALIDATE_CACHE);
 
-	LOG("cb_buf1 = 0x%x\n", &nnsPrintSvrObj->cb_buf1[0]);
-	LOG("cb_buf2 = 0x%x\n", &nnsPrintSvrObj->cb_buf2[0]);
-	LOG("nnsPrintAspect = 0x%x\n", &nnsPrintAspect);
-	LOG("nnsPrint2d = 0x%x\n", &nnsPrint2d);
+	//LOG("cb_buf1 = 0x%x\n", &nnsPrintSvrObj->cb_buf1[0]);
+	//LOG("cb_buf2 = 0x%x\n", &nnsPrintSvrObj->cb_buf2[0]);
+	//LOG("nnsPrintAspect = 0x%x\n", &nnsPrintAspect);
+	//LOG("nnsPrint2d = 0x%x\n", &nnsPrint2d);
 }
