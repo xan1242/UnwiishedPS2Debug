@@ -394,7 +394,7 @@ void MDebugSelectEx_HandleSonicActionSetup()
 	nnPrint(baseX, posY++, "StartArea = %c", MDebugSelectEx_SonicAction_AreaLetters[MDebugSelectEx_SonicActionSettings->startArea]);
 	nnPrint(baseX, posY++, "IsEvil = %d", MDebugSelectEx_SonicActionSettings->isEvil);
 	nnPrint(baseX, posY++, "Mode = %s", MDebugSelectEx_GetSettingName(SAS_SpecialMode, MDebugSelectEx_SonicActionSettings->specialMode));
-	nnPrint(baseX, ++posY, "%s", stgName);
+	nnPrint(baseTitleX + 2, ++posY, "%s", stgName);
 
 }
 
