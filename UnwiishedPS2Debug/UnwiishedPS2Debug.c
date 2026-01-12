@@ -193,6 +193,9 @@ void UnwiishedPS2Debug_Init()
 
 	// hook the dump function
 	minj_MakeJMP(0xD5560, (uintptr_t)&UnwiishedPS2Debug_hkHeapManager_Dump);
+
+	// fix "Sonic Action" entry in DebugSelect
+	minj_WriteMemory32(0x754740, 4);
 }
 
 void UnwiishedPS2Debug_PostInit()
