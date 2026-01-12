@@ -2,7 +2,7 @@
 
 This is a plugin that mainly restores nnPrint by porting the function over from Sonic Riders Zero Gravity.
 
-Additionally, it adds easy access to the DebugSelect mode.
+Additionally, it adds easy access to the DebugSelect mode, an FPS display and a heap info display.
 
 ## Installation
 
@@ -16,9 +16,13 @@ This plugin should automatically bind and re-enable nnPrint.
 
 - To access the DebugSelect mode, press Start + Select and release it. Upon release, the game should switch to the DebugSelect mode. (NOTE: be sure NOT to do this as the game is being saved, or else you risk corrupting your save data!)
 
-- To toggle the FPS display (between off/on/constant update): press Select + L1
+- Toggle the FPS display (between off/on/constant update): Select + L1
 
-- To switch the FPS display type: press Select + L2
+- Switch the FPS display type: Select + L2
+
+- Toggle heap display: Select + R3
+
+- While in heap display, to control the cursor, hold R1. To dump the heap stats of the selected item to the TTY, press R3 while holding R1. (NOTE: dumping is very rudimentary)
 
 ## FPS display
 
