@@ -20,6 +20,16 @@ This plugin should automatically bind and re-enable nnPrint.
 
 - To switch the FPS display type: press Select + L2
 
+## FPS display
+
+Currently, the plugin only measures the frametime on the main loop and not rendering specifically.
+
+It works the same as the Black Box NFS games otherwise.
+
+You can toggle between 3 types: FPS+Frametime, frametime only and FPS only
+
+By default, the FPS display only updates every 8th frame (1/8th framerate). If you want to disable this, press the toggle button and it will go into the "constant" mode. Please be aware that this may affect performance.
+
 ## Compatibility
 
 Currently it is only compatible with the EU build (SLES-55380).
