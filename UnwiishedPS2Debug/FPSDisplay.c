@@ -14,7 +14,7 @@ unsigned int FPSDisplay_Mode = FPSDISPLAY_MODE_FLAG_ONOFF | FPSDISPLAY_MODE_FLAG
 
 void FPSDisplay_StartFrame()
 {
-	FrameTimingStartTime = bGetTicker();
+	FrameTimingStartTime = FrameTimingEndTime;
 }
 
 void FPSDisplay_EndFrame()
