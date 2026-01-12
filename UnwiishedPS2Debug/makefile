@@ -12,6 +12,8 @@ gprintf.c \
 nnRenderStuff.c \
 nnFlushPrint.c \
 nnPrint.c \
+bWare.c \
+FPSDisplay.c \
 UnwiishedPS2Debug.c \
 
 

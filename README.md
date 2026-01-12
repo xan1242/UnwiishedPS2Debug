@@ -16,7 +16,11 @@ This is very unfinished and unpolished currently, use it at your own risk!
 
 This plugin should automatically bind and re-enable nnPrint.
 
-To access the DebugSelect mode, press Start + Select and release it. Upon release, the game should switch to the DebugSelect mode. (NOTE: be sure NOT to do this as the game is being saved, or else you risk corrupting your save data!)
+- To access the DebugSelect mode, press Start + Select and release it. Upon release, the game should switch to the DebugSelect mode. (NOTE: be sure NOT to do this as the game is being saved, or else you risk corrupting your save data!)
+
+- To toggle the FPS display (between off/on/constant update): press Select + L1
+
+- To switch the FPS display type: press Select + L2
 
 ## Compatibility
 

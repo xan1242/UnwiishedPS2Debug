@@ -3,6 +3,7 @@
 #include "nnRenderStuff.h"
 #include "nnPrint.h"
 #include "includes/minjector.h"
+#include "FPSDisplay.h"
 
 // functions
 void(*UnwiishedPS2Debug_uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
@@ -14,6 +15,12 @@ const uintptr_t p_gp = 0x877FF0;
 uintptr_t p_ButtonMaskCurrent = p_gp - 0x3324;
 uintptr_t p_ModeUpdateTrigger;
 bool bModeTriggerOldState;
+
+int DisplayFPSMode = DISPLAYFPS_MODE_ON;
+bool bDisplayFPSModeTriggerOldState;
+
+int DisplayFPSType = DISPLAYFPS_TYPE_ALL;
+bool bDisplayFPSTypeTriggerOldState;
 
 void (*_FlushCache)(int op) = (void(*)(int))(0);
 void FlushCache(int op)
@@ -34,21 +41,100 @@ void GotoDebugSelectMode()
 void HandleInputs()
 {
 	uint32_t buttonMask = *(uint32_t*)(p_ButtonMaskCurrent);
-	bool bButtonState = (buttonMask & 0x0100) && (buttonMask & 0x0800); // select & start
-	if (bModeTriggerOldState != bButtonState)
+	bool bModeButtonState = (buttonMask & 0x0100) && (buttonMask & 0x0800); // select & start
+	if (bModeTriggerOldState != bModeButtonState)
 	{
-		if (!bButtonState) // on release
+		if (!bModeButtonState) // on release
 		{
 			//LOG("released start+select!\n");
 			GotoDebugSelectMode();
 		}
 	}
-	bModeTriggerOldState = bButtonState;
+	bModeTriggerOldState = bModeButtonState;
+
+
+	bool bDisplayFPSModeButtonState = (buttonMask & 0x0100) && (buttonMask & 0004); // select & L1
+	if (bDisplayFPSModeTriggerOldState != bDisplayFPSModeButtonState)
+	{
+		if (bDisplayFPSModeButtonState) // on press
+		{
+			DisplayFPSMode++;
+			DisplayFPSMode %= DISPLAYFPS_MODE_COUNT;
+
+			unsigned int fpsmode = FPSDisplay_GetMode();
+
+			switch (DisplayFPSMode)
+			{
+				case DISPLAYFPS_MODE_ON_CONSTANT:
+					fpsmode |= FPSDISPLAY_MODE_FLAG_ONOFF | FPSDISPLAY_MODE_FLAG_CONSTANT;
+					nnSetPrintColor(0xFFFF00FF);
+					nnPrint(0, 3, "FPSDisplay ON CONSTANT");
+					break;
+				case DISPLAYFPS_MODE_ON:
+					fpsmode &= ~FPSDISPLAY_MODE_FLAG_CONSTANT;
+					fpsmode |= FPSDISPLAY_MODE_FLAG_ONOFF;
+					nnSetPrintColor(0x00FF00FF);
+					nnPrint(0, 3, "FPSDisplay ON REDUCED");
+					break;
+				default:
+					fpsmode &= ~FPSDISPLAY_MODE_FLAG_ONOFF;
+					nnSetPrintColor(0xFF0000FF);
+					nnPrint(0, 3, "FPSDisplay OFF");
+					break;
+			}
+
+			FPSDisplay_SetMode(fpsmode);
+		}
+	}
+	bDisplayFPSModeTriggerOldState = bDisplayFPSModeButtonState;
+
+	bool bDisplayFPSTypeButtonState = (buttonMask & 0x0100) && (buttonMask & 0001); // select & L2
+	if (bDisplayFPSTypeTriggerOldState != bDisplayFPSTypeButtonState)
+	{
+		if (bDisplayFPSTypeButtonState)
+		{
+			DisplayFPSType++;
+			DisplayFPSType %= DISPLAYFPS_TYPE_COUNT;
+
+			unsigned int fpsmode = FPSDisplay_GetMode();
+
+			switch (DisplayFPSType)
+			{
+				case DISPLAYFPS_TYPE_FPS:
+					fpsmode &= ~FPSDISPLAY_MODE_FLAG_FRAMETIME;
+					fpsmode |= FPSDISPLAY_MODE_FLAG_FRAMERATE;
+					nnSetPrintColor(0xFFFFFFFF);
+					nnPrint(0, 3, "FPSDisplay Type FPS");
+					break;
+				case DISPLAYFPS_TYPE_FT:
+					fpsmode &= ~FPSDISPLAY_MODE_FLAG_FRAMERATE;
+					fpsmode |= FPSDISPLAY_MODE_FLAG_FRAMETIME;
+					nnSetPrintColor(0xFFFFFFFF);
+					nnPrint(0, 3, "FPSDisplay Type FT");
+					break;
+				default:
+					fpsmode |= FPSDISPLAY_MODE_FLAG_FRAMETIME | FPSDISPLAY_MODE_FLAG_FRAMERATE;
+					nnSetPrintColor(0xFFFFFFFF);
+					nnPrint(0, 3, "FPSDisplay Type ALL");
+					break;
+			}
+
+			FPSDisplay_SetMode(fpsmode);
+		}
+	}
+	bDisplayFPSTypeTriggerOldState = bDisplayFPSTypeButtonState;
+
 }
 
 void UnwiishedPS2Debug_MainLoopHook(void* obj)
 {
+	FPSDisplay_StartFrame();
 	UnwiishedPS2Debug_uMainLoopFunc(obj);
+	FPSDisplay_EndFrame();
+
+	if (DisplayFPSMode != 0)
+		FPSDisplay_Draw();
+
 	HandleInputs();
 }
 

@@ -160,6 +160,8 @@ copy /y "$(NMakeOutput)" "!target!"
   <ItemDefinitionGroup>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bWare.c" />
+    <ClCompile Include="FPSDisplay.c" />
     <ClCompile Include="gprintf.c" />
     <ClCompile Include="includes\minjector.c" />
     <ClCompile Include="main.c" />
@@ -173,6 +175,8 @@ copy /y "$(NMakeOutput)" "!target!"
     <None Include="makefile" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bWare.h" />
+    <ClInclude Include="FPSDisplay.h" />
     <ClInclude Include="gprintf.h" />
     <ClInclude Include="includes\minjector.h" />
     <ClInclude Include="nnFlushPrint.h" />
