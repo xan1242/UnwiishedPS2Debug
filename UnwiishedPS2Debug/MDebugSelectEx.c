@@ -139,15 +139,15 @@ void MDebugSelectEx_GetStageName(int stageID, char* outBuffer)
 		return;
 	}
 
-	const char* hiName = "[Sonic]";
+	const char* hiName = "Sonic";
 	if (hiStageID >= 1)
-		hiName = "[Evil]";
+		hiName = "Evil";
 
 	const char* midName = "Unknown";
 	if ((midStageID > 0) && (midStageID <= SONICACTIONSETTINGS_NUM_CAPITAL))
 		midName = MDebugSelectEx_SonicAction_StageNames[midStageID - 1];
 
-	UnwiishedPS2Debug_sprintf(outBuffer, "%s %s Act %d", hiName, midName, lowStageID);
+	UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s Act %d", hiName, midName, lowStageID);
 	return;
 }
 
