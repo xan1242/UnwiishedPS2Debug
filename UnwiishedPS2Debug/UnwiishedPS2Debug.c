@@ -74,7 +74,7 @@ void HandleInputs()
 					fpsmode &= ~FPSDISPLAY_MODE_FLAG_CONSTANT;
 					fpsmode |= FPSDISPLAY_MODE_FLAG_ONOFF;
 					nnSetPrintColor(0x00FF00FF);
-					nnPrint(0, 3, "FPSDisplay ON REDUCED");
+					nnPrint(0, 3, "FPSDisplay ON");
 					break;
 				default:
 					fpsmode &= ~FPSDISPLAY_MODE_FLAG_ONOFF;
