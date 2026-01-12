@@ -143,6 +143,7 @@ void nnPrint_hkSetVideoMode(void* obj, int mode, void(*fn)(void*, int))
 	nnExitPrint();
 	fn(obj, mode);
 	nnInitPrint(PrintBuf, NUM_ITEMS, NULL);
+	nnSetPrintSize(10, 13);
 }
 
 void nnPrint_hkSetVideoMode_1(void* obj, int mode)
