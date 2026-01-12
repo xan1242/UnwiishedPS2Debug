@@ -257,17 +257,17 @@ const char* MDebugSelectEx_GetSettingName(int setting, int val)
 		{
 			switch (val)
 			{
-				case 0:
+				case SASM_Normal:
 					return "Normal";
-				case 1:
-					return "Unknown (1)";
-				case 2:
-					return "Unknown (2)";
-				case 3:
+				case SASM_TimeTrial:
+					return "TimeTrial";
+				case SASM_CollectRing:
+					return "CollectRing";
+				case SASM_DragoonBoss:
 					return "EggDragoon"; // no idea about this one...
-				case 4:
+				case SASM_Boss:
 					return "Boss";
-				case 5:
+				case SASM_Entrance:
 					return "Entrance";
 			}
 			break;
