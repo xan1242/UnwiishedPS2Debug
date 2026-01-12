@@ -25,8 +25,6 @@ void(*SetVideoMode_2)(void* obj, int mode) = (void(*)(void*, int))(0);
 void(*SetVideoMode_3)(void* obj, int mode) = (void(*)(void*, int))(0);
 void(*uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
 
-void(*_nnFlushPrint)() = (void(*)())(nnFlushPrint);
-
 void(*nnPrint)(int x, int y, const char* fmt, ...) = (void(*)(int, int, const char*, ...))(0);
 void(*nnSetPrintColor)(unsigned int color) = (void(*)(unsigned int))(0);
 
@@ -167,38 +165,6 @@ void nnPrint_InitDebugPrint(int sizeX, int sizeY)
 	nnSetPrintSize((float)sizeX, (float)sizeY);
 }
 
-void nnPrint_Flush()
-{
-	_nnFlushPrint();
-}
-
-void nnPrint_hkMainLoop();
-#ifndef __INTELLISENSE__
-asm
-(
-	".global nnPrint_hkMainLoop\n"
-	"nnPrint_hkMainLoop:\n"
-	"addiu $sp, $sp, -0x10\n"
-	"sd $v0, 0($sp)\n"
-	"nop\n"
-	"jal nnPrint_Flush\n"
-	"ld $v0, 0($sp)\n"
-	"addiu $sp, $sp, 0x10\n"
-	"bnez $v0, nnPrint_hkMainLoop_skippoint\n"
-	"lui $v1, %hi(loc_D0B5C)\n"
-	"addiu $v1, $v1, %lo(loc_D0B5C)\n"
-	"lw $v1, 0($v1)\n"
-	"nop\n"
-	"jr $v1\n"
-	"nnPrint_hkMainLoop_skippoint:\n"
-	"lui $v1, %hi(loc_D0BA4)\n"
-	"addiu $v1, $v1, %lo(loc_D0BA4)\n"
-	"lw $v1, 0($v1)\n"
-	"nop\n"
-	"jr $v1\n"
-);
-#endif
-
 void nnPrint_PXReferCB()
 {
 	return PXReferCB(cb1);
@@ -228,7 +194,7 @@ void nnPrint_MainLoopHook(void* obj)
 	//nnSetPrintColor(0xFFFFFFFF);
 	//nnPrint(1, 1, "THIS IS A TEST BLABLABLA");
 
-	nnPrint_Flush();
+	nnFlushPrint();
 }
 
 void nnPrint_PatchFlushPrint()
@@ -334,7 +300,6 @@ void nnPrint_Init()
 	loc_D0BA4 = 0xD0BA4;
 	loc_D0B5C = 0xD0B5C;
 
-	//minj_MakeJMP(loc_D0B54, (uintptr_t)&nnPrint_hkMainLoop);
 	uintptr_t loc_4FF7B0 = 0x4FF7B0;
 	uMainLoopFunc = (void(*)(void*))(minj_GetBranchDestination(loc_4FF7B0));
 	minj_MakeCALL(loc_4FF7B0, (uintptr_t)&nnPrint_MainLoopHook);
