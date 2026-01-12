@@ -9,6 +9,7 @@
 void(*UnwiishedPS2Debug_uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
 void* (*UnwiishedPS2Debug_uGetModeManagerThingy)() = (void* (*)())(0);
 void(*UnwiishedPS2Debug_uSetNextGameModeThingy)(void* manager, int mode) = (void(*)(void*, int))(0);
+void(*UnwiishedPS2Debug_HeapManager_DispInfo)(int posX, int posY) = (void(*)(int, int))(0);
 
 const uintptr_t p_gp = 0x877FF0;
 //uintptr_t p_ButtonMaskThisFrame = p_gp - 0x331C;
@@ -21,6 +22,9 @@ bool bDisplayFPSModeTriggerOldState;
 
 int DisplayFPSType = DISPLAYFPS_TYPE_ALL;
 bool bDisplayFPSTypeTriggerOldState;
+
+bool bDisplayHeap = false;
+bool bDisplayHeapTriggerOldState;
 
 void (*_FlushCache)(int op) = (void(*)(int))(0);
 void FlushCache(int op)
@@ -124,6 +128,15 @@ void HandleInputs()
 	}
 	bDisplayFPSTypeTriggerOldState = bDisplayFPSTypeButtonState;
 
+	bool bDisplayHeapButtonState = (buttonMask & 0x0100) && (buttonMask & 0x0400); // select & R3
+	if (bDisplayHeapTriggerOldState != bDisplayHeapButtonState)
+	{
+		if (bDisplayHeapButtonState) // on press
+		{
+			bDisplayHeap = !bDisplayHeap;
+		}
+	}
+	bDisplayHeapTriggerOldState = bDisplayHeapButtonState;
 }
 
 void UnwiishedPS2Debug_MainLoopHook(void* obj)
@@ -132,12 +145,20 @@ void UnwiishedPS2Debug_MainLoopHook(void* obj)
 	UnwiishedPS2Debug_uMainLoopFunc(obj);
 	FPSDisplay_EndFrame();
 
+	if (bDisplayHeap)
+		UnwiishedPS2Debug_HeapManager_DispInfo(32, 3);
+	
 	if (DisplayFPSMode != 0)
 		FPSDisplay_Draw();
 
 	HandleInputs();
 }
 
+void UnwiishedPS2Debug_hkHeapManager_Dump(HeapAlloc* pHeap)
+{
+	LOG_NOHEADER("UnwiishedPS2Debug_hkHeapManager_Dump: STUB!\nHeap: 0x%x\nPtr: 0x%x\nSize: %u bytes\nNum allocations: %u\n", pHeap, pHeap->unkptr1, pHeap->size1, pHeap->numAlloc);
+	LOG_NOHEADER("Size2: %u bytes\nunkptr2: 0x%x\nunkptr3: 0x%x\nunkptr4: 0x%x\nunkptr5: 0x%x\n", pHeap->size2, pHeap->unkptr2, pHeap->unkptr3, pHeap->unkptr4, pHeap->unkptr5);
+}
 
 void UnwiishedPS2Debug_Init()
 {
@@ -162,11 +183,16 @@ void UnwiishedPS2Debug_Init()
 	uintptr_t loc_D098C = 0xD098C;
 	p_ModeUpdateTrigger = minj_GetPtr(loc_D098C, loc_D098C + 4);
 
-	// replace attract mode with DebugSelect mode
-	uintptr_t loc_40E98C = 0x0040E98C;
-	*(int16_t*)(loc_40E98C) = 1;
+	uintptr_t loc_35A908 = 0x35A908;
+	uintptr_t loc_35A910 = loc_35A908 + 8;
+	UnwiishedPS2Debug_HeapManager_DispInfo = (void(*)(int, int))(minj_GetPtr(loc_35A908, loc_35A910));
 
-    //PrintActionIdEnum();
+	// patch heap display inputs to use global inputs instead...
+	minj_WriteMemory32(0x000D6B18, 0x03801021); // move v0, gp
+	minj_WriteMemory32(0x000D6B1C, 0x2442CCDC); // addiu v0, v0, -0x3324
+
+	// hook the dump function
+	minj_MakeJMP(0xD5560, (uintptr_t)&UnwiishedPS2Debug_hkHeapManager_Dump);
 }
 
 void UnwiishedPS2Debug_PostInit()

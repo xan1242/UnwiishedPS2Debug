@@ -3,11 +3,14 @@
 
 #include "gprintf.h"
 #include <stdbool.h>
+#include <stddef.h>
 
 #if (defined __DEBUG) || (defined __ENABLELOG)
 #define LOG(fmt, ...) gprintf("UnwiishedPS2Debug: " fmt, ##__VA_ARGS__)
+#define LOG_NOHEADER(fmt, ...) gprintf(fmt, ##__VA_ARGS__)
 #else
 #define LOG(fmt, ...)
+#define LOG_NOHEADER(fmt, ...)
 #endif
 
 // Definitions
@@ -29,6 +32,19 @@
 #define DISPLAYFPS_TYPE_FT 1
 #define DISPLAYFPS_TYPE_FPS 2
 #define DISPLAYFPS_TYPE_COUNT 3
+
+typedef struct
+{
+	void* unkptr1;
+	size_t size1;
+	size_t size2;
+	size_t numAlloc;
+	void* unkptr2;
+	void* unkptr3;
+	void* unkptr4;
+	void* unkptr5;
+} HeapAlloc;
+
 
 // Functions
 void UnwiishedPS2Debug_Init();
