@@ -30,6 +30,8 @@ You can toggle between 3 types: FPS+Frametime, frametime only and FPS only
 
 By default, the FPS display only updates every 8th frame (1/8th framerate). If you want to disable this, press the toggle button and it will go into the "constant" mode. Please be aware that this may affect performance.
 
+NOTE: nnPrint currently has an issue where it doesn't draw on top of everything, so you may see the printouts be affected by effects and rendered behind the pause menu.
+
 ## Compatibility
 
 Currently it is only compatible with the EU build (SLES-55380).
