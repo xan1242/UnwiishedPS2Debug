@@ -4,8 +4,6 @@ This is a plugin that mainly restores nnPrint by porting the function over from 
 
 Additionally, it adds easy access to the DebugSelect mode.
 
-This is very unfinished and unpolished currently, use it at your own risk!
-
 ## Installation
 
 1. Get [the latest build of PCSX2 Fork with Plugins here](https://github.com/ASI-Factory/PCSX2-Fork-With-Plugins/releases/tag/latest) (MSVC AVX2 build should be good for most people)
