@@ -10,6 +10,7 @@ EE_OBJS = main.o \
 includes\minjector.c \
 gprintf.c \
 nnRenderStuff.c \
+nnFlushPrint.c \
 nnPrint.c \
 UnwiishedPS2Debug.c \
 

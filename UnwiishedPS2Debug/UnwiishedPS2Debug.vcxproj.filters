@@ -33,6 +33,9 @@
     <ClCompile Include="nnRenderStuff.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nnFlushPrint.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="linkfile">

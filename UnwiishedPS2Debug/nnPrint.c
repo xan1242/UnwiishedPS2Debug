@@ -239,41 +239,43 @@ void nnPrint_MainLoopHook(void* obj)
 
 void nnPrint_PatchFlushPrint()
 {
+	unsigned char* _nnFlushPrint = (unsigned char*)(&nnFlushPrint);
+
 	// fix up nnFlushPrint for Unleashed (was taken from Riders ZG)
-	minj_MakeCALL((uintptr_t)&nnFlushPrint[8], (uintptr_t)&nnPrint_PXReferCB);
-	minj_MakeCALL((uintptr_t)&nnFlushPrint[0x10], (uintptr_t)&PXBegin);
-	minj_MakeCALL((uintptr_t)&nnFlushPrint[0x2B4], (uintptr_t)&PXEnd);
-	minj_MakeCALL((uintptr_t)&nnFlushPrint[0x2D0], (uintptr_t)&nnPrint_PXSetCB);
-	minj_MakeCALL((uintptr_t)&nnFlushPrint[0x2FC], (uintptr_t)&nnPrint_PXSetCB);
-	minj_MakeCALL((uintptr_t)&nnFlushPrint[0x304], (uintptr_t)&nnPrint_PXPutCB);
+	minj_MakeCALL((uintptr_t)&_nnFlushPrint[8], (uintptr_t)&nnPrint_PXReferCB);
+	minj_MakeCALL((uintptr_t)&_nnFlushPrint[0x10], (uintptr_t)&PXBegin);
+	minj_MakeCALL((uintptr_t)&_nnFlushPrint[0x2B4], (uintptr_t)&PXEnd);
+	minj_MakeCALL((uintptr_t)&_nnFlushPrint[0x2D0], (uintptr_t)&nnPrint_PXSetCB);
+	minj_MakeCALL((uintptr_t)&_nnFlushPrint[0x2FC], (uintptr_t)&nnPrint_PXSetCB);
+	minj_MakeCALL((uintptr_t)&_nnFlushPrint[0x304], (uintptr_t)&nnPrint_PXPutCB);
 	// patch up GP ptrs...
 	// nnsPrintNum
-	*(int16_t*)(&nnFlushPrint[0x18]) = -0x4084;
-	*(int16_t*)(&nnFlushPrint[0x274]) = -0x4084;
-	*(int16_t*)(&nnFlushPrint[0x2D4]) = -0x4084;
+	*(int16_t*)(&_nnFlushPrint[0x18]) = -0x4084;
+	*(int16_t*)(&_nnFlushPrint[0x274]) = -0x4084;
+	*(int16_t*)(&_nnFlushPrint[0x2D4]) = -0x4084;
 	// nnsPrintChar
-	*(int16_t*)(&nnFlushPrint[0x50]) = -0x4098;
+	*(int16_t*)(&_nnFlushPrint[0x50]) = -0x4098;
 	// nnsPrintBuf
-	*(int16_t*)(&nnFlushPrint[0x54]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0xB4]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0xC4]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0xD4]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0xE4]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0x198]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0x1A8]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0x1B8]) = -0x409C;
-	*(int16_t*)(&nnFlushPrint[0x1C8]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0x54]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0xB4]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0xC4]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0xD4]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0xE4]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0x198]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0x1A8]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0x1B8]) = -0x409C;
+	*(int16_t*)(&_nnFlushPrint[0x1C8]) = -0x409C;
 	// nngGsZbuf
-	*(uint16_t*)(&nnFlushPrint[0x2D8]) = 0x77;
-	*(uint16_t*)(&nnFlushPrint[0x2DC]) = 0x77;
-	*(uint16_t*)(&nnFlushPrint[0x2E0]) = 0x8D04;
-	*(uint16_t*)(&nnFlushPrint[0x2E4]) = 0x8D00;
+	*(uint16_t*)(&_nnFlushPrint[0x2D8]) = 0x77;
+	*(uint16_t*)(&_nnFlushPrint[0x2DC]) = 0x77;
+	*(uint16_t*)(&_nnFlushPrint[0x2E0]) = 0x8D04;
+	*(uint16_t*)(&_nnFlushPrint[0x2E4]) = 0x8D00;
 	// nngGsTest
-	*(uint16_t*)(&nnFlushPrint[0x2BC]) = 0x77;
-	*(uint16_t*)(&nnFlushPrint[0x2C4]) = 0x8D28;
+	*(uint16_t*)(&_nnFlushPrint[0x2BC]) = 0x77;
+	*(uint16_t*)(&_nnFlushPrint[0x2C4]) = 0x8D28;
 	// nnsPrintZ
-	*(int16_t*)(&nnFlushPrint[0x178]) = -0x7584;
-	*(int16_t*)(&nnFlushPrint[0x260]) = -0x7584;
+	*(int16_t*)(&_nnFlushPrint[0x178]) = -0x7584;
+	*(int16_t*)(&_nnFlushPrint[0x260]) = -0x7584;
 
 	// nnsPrint2d & nnsPrintAspect
 	// calculate the halves correctly
@@ -284,28 +286,28 @@ void nnPrint_PatchFlushPrint()
 		p_nnsPrintAspect_Upper += 1;
 
 	// write lui t2, p_nnsPrintAspect_Upper now... (we'll assume the same for nnsPrint2d)
-	*(uint32_t*)(&nnFlushPrint[0x9C]) = 0x3C0A0000 | p_nnsPrintAspect_Upper;
+	*(uint32_t*)(&_nnFlushPrint[0x9C]) = 0x3C0A0000 | p_nnsPrintAspect_Upper;
 	// lwc f01, p_nnsPrintAspect_Lower(t2)
-	*(uint32_t*)(&nnFlushPrint[0xF8]) = 0xC5410000 | p_nnsPrintAspect_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0xF8]) = 0xC5410000 | p_nnsPrintAspect_Lower;
 	// lwc f02, p_nnsPrintAspect_Lower(t2)
-	*(uint32_t*)(&nnFlushPrint[0x1DC]) = 0xC5420000 | p_nnsPrintAspect_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0x1DC]) = 0xC5420000 | p_nnsPrintAspect_Lower;
 	// y value
 	uint16_t p_nnsPrintAspect_Y_Lower = ((uintptr_t) & (nnsPrintAspect.y)) & 0xFFFF;
 	// lwc f01, p_nnsPrintAspect_Y_Lower(t2)
-	*(uint32_t*)(&nnFlushPrint[0x138]) = 0xC5410000 | p_nnsPrintAspect_Y_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0x138]) = 0xC5410000 | p_nnsPrintAspect_Y_Lower;
 	// lwc f02, p_nnsPrintAspect_Y_Lower(t2)
-	*(uint32_t*)(&nnFlushPrint[0x220]) = 0xC5420000 | p_nnsPrintAspect_Y_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0x220]) = 0xC5420000 | p_nnsPrintAspect_Y_Lower;
 
 	uintptr_t p_nnsPrint2d = (uintptr_t)&nnsPrint2d;
 	uint16_t p_nnsPrint2d_Lower = (p_nnsPrint2d) & 0xFFFF;
 	// lwc f00, p_nnsPrint2d_Lower(t2)
-	*(uint32_t*)(&nnFlushPrint[0xF4]) = 0xC5400000 | p_nnsPrint2d_Lower;
-	*(uint32_t*)(&nnFlushPrint[0x1D8]) = 0xC5400000 | p_nnsPrint2d_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0xF4]) = 0xC5400000 | p_nnsPrint2d_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0x1D8]) = 0xC5400000 | p_nnsPrint2d_Lower;
 	// y value
 	uint16_t p_nnsPrint2d_Y_Lower = ((uintptr_t)&nnsPrint2d.y) & 0xFFFF;
 	// lwc f00, p_nnsPrintAspect_Y_Lower(t2)
-	*(uint32_t*)(&nnFlushPrint[0x134]) = 0xC5400000 | p_nnsPrint2d_Y_Lower;
-	*(uint32_t*)(&nnFlushPrint[0x21C]) = 0xC5400000 | p_nnsPrint2d_Y_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0x134]) = 0xC5400000 | p_nnsPrint2d_Y_Lower;
+	*(uint32_t*)(&_nnFlushPrint[0x21C]) = 0xC5400000 | p_nnsPrint2d_Y_Lower;
 }
 
 void nnPrint_Init()

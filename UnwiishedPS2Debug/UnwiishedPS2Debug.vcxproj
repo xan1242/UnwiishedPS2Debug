@@ -163,6 +163,7 @@ copy /y "$(NMakeOutput)" "!target!"
     <ClCompile Include="gprintf.c" />
     <ClCompile Include="includes\minjector.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="nnFlushPrint.c" />
     <ClCompile Include="nnPrint.c" />
     <ClCompile Include="nnRenderStuff.c" />
     <ClCompile Include="UnwiishedPS2Debug.c" />
