@@ -42,6 +42,9 @@
     <ClCompile Include="FPSDisplay.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MDebugSelectEx.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="linkfile">
@@ -77,6 +80,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FPSDisplay.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MDebugSelectEx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

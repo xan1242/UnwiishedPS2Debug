@@ -1,5 +1,3 @@
-#include "stdbool.h"
-
 #ifndef FPSDISPLAY_H
 #define FPSDISPLAY_H
 

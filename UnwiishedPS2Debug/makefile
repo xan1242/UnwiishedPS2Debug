@@ -14,6 +14,7 @@ nnFlushPrint.c \
 nnPrint.c \
 bWare.c \
 FPSDisplay.c \
+MDebugSelectEx.c \
 UnwiishedPS2Debug.c \
 
 

@@ -165,6 +165,7 @@ copy /y "$(NMakeOutput)" "!target!"
     <ClCompile Include="gprintf.c" />
     <ClCompile Include="includes\minjector.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="MDebugSelectEx.c" />
     <ClCompile Include="nnFlushPrint.c" />
     <ClCompile Include="nnPrint.c" />
     <ClCompile Include="nnRenderStuff.c" />
@@ -179,6 +180,7 @@ copy /y "$(NMakeOutput)" "!target!"
     <ClInclude Include="FPSDisplay.h" />
     <ClInclude Include="gprintf.h" />
     <ClInclude Include="includes\minjector.h" />
+    <ClInclude Include="MDebugSelectEx.h" />
     <ClInclude Include="nnFlushPrint.h" />
     <ClInclude Include="nngPrintTexture.h" />
     <ClInclude Include="nnPrint.h" />

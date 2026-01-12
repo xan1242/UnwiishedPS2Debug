@@ -51,5 +51,9 @@ void UnwiishedPS2Debug_Init();
 void UnwiishedPS2Debug_PostInit();
 void FlushCache(int op);
 
+extern void* (*UnwiishedPS2Debug_uGetModeManagerThingy)();
+extern void(*UnwiishedPS2Debug_uSetNextGameModeThingy)(void* manager, int mode);
+extern int(*UnwiishedPS2Debug_sprintf)(char* buf, const char* fmt, ...);
+extern uintptr_t p_ModeUpdateTrigger;
 
 #endif

@@ -22,7 +22,7 @@ This plugin should automatically bind and re-enable nnPrint.
 
 - Toggle heap display: Select + R3
 
-- While in heap display, to control the cursor, hold R1. To dump the heap stats of the selected item to the TTY, press R3 while holding R1. (NOTE: dumping is very rudimentary)
+- While in heap display (with the second controller ONLY), to control the cursor, hold R1. To dump the heap stats of the selected item to the TTY, press R3 while holding R1. (NOTE: dumping is very rudimentary)
 
 ## FPS display
 

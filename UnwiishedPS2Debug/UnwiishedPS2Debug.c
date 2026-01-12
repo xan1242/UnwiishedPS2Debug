@@ -4,27 +4,29 @@
 #include "nnPrint.h"
 #include "includes/minjector.h"
 #include "FPSDisplay.h"
+#include "MDebugSelectEx.h"
 
 // functions
 void(*UnwiishedPS2Debug_uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
 void* (*UnwiishedPS2Debug_uGetModeManagerThingy)() = (void* (*)())(0);
 void(*UnwiishedPS2Debug_uSetNextGameModeThingy)(void* manager, int mode) = (void(*)(void*, int))(0);
 void(*UnwiishedPS2Debug_HeapManager_DispInfo)(int posX, int posY) = (void(*)(int, int))(0);
+int(*UnwiishedPS2Debug_sprintf)(char* buf, const char* fmt, ...) = (int(*)(char*,const char*, ...))(0);
 
 const uintptr_t p_gp = 0x877FF0;
 //uintptr_t p_ButtonMaskThisFrame = p_gp - 0x331C;
 uintptr_t p_ButtonMaskCurrent = p_gp - 0x3324;
 uintptr_t p_ModeUpdateTrigger;
-bool bModeTriggerOldState;
+bool bModeTriggerOldState = false;
 
 int DisplayFPSMode = DISPLAYFPS_MODE_ON;
-bool bDisplayFPSModeTriggerOldState;
+bool bDisplayFPSModeTriggerOldState = false;
 
 int DisplayFPSType = DISPLAYFPS_TYPE_ALL;
-bool bDisplayFPSTypeTriggerOldState;
+bool bDisplayFPSTypeTriggerOldState = false;
 
 bool bDisplayHeap = false;
-bool bDisplayHeapTriggerOldState;
+bool bDisplayHeapTriggerOldState = false;
 
 void (*_FlushCache)(int op) = (void(*)(int))(0);
 void FlushCache(int op)
@@ -167,8 +169,12 @@ void UnwiishedPS2Debug_Init()
 	uintptr_t loc_D01F0 = 0xD01F0;
 	_FlushCache = (void(*)(int))(minj_GetBranchDestination(loc_D01F0));
 
+	uintptr_t loc_FD348 = 0xFD348;
+	UnwiishedPS2Debug_sprintf = (int(*)(char*, const char*, ...))(minj_GetBranchDestination(loc_FD348));
+
 	nnRenderStuff_Init();
 	nnPrint_Init();
+	MDebugSelectEx_Init();
 
 	uintptr_t loc_4FF7B0 = 0x4FF7B0;
 	UnwiishedPS2Debug_uMainLoopFunc = (void(*)(void*))(minj_GetBranchDestination(loc_4FF7B0));
@@ -187,9 +193,9 @@ void UnwiishedPS2Debug_Init()
 	uintptr_t loc_35A910 = loc_35A908 + 8;
 	UnwiishedPS2Debug_HeapManager_DispInfo = (void(*)(int, int))(minj_GetPtr(loc_35A908, loc_35A910));
 
-	// patch heap display inputs to use global inputs instead...
-	minj_WriteMemory32(0x000D6B18, 0x03801021); // move v0, gp
-	minj_WriteMemory32(0x000D6B1C, 0x2442CCDC); // addiu v0, v0, -0x3324
+	// patch heap display inputs to use global inputs instead... -- removed, it's actually read on port 2...
+	//minj_WriteMemory32(0x000D6B18, 0x03801021); // move v0, gp
+	//minj_WriteMemory32(0x000D6B1C, 0x2442CCDC); // addiu v0, v0, -0x3324
 
 	// hook the dump function
 	minj_MakeJMP(0xD5560, (uintptr_t)&UnwiishedPS2Debug_hkHeapManager_Dump);
