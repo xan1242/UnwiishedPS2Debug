@@ -89,28 +89,28 @@ void MDebugSelectEx_GetStageName(int stageID, char* outBuffer)
 	switch (stageID)
 	{
 		case 174:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Evil Boss", MDebugSelectEx_SonicAction_BossNames[6]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[6]);
 			return;
 		case 155:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Evil Boss", MDebugSelectEx_SonicAction_BossNames[4]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[4]);
 			return;
 		case 145:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Evil Boss", MDebugSelectEx_SonicAction_BossNames[3]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[3]);
 			return;
 		case 125:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Evil Boss", MDebugSelectEx_SonicAction_BossNames[1]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[1]);
 			return;
 		case 75:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Sonic Boss", MDebugSelectEx_SonicAction_BossNames[7]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[7]);
 			return;
 		case 65:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Sonic Boss", MDebugSelectEx_SonicAction_BossNames[5]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[5]);
 			return;
 		case 35:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Sonic Boss", MDebugSelectEx_SonicAction_BossNames[2]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[2]);
 			return;
 		case 15:
-			UnwiishedPS2Debug_sprintf(outBuffer, "[%s] %s", "Sonic Boss", MDebugSelectEx_SonicAction_BossNames[0]);
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[0]);
 			return;
 		default:
 			break;
