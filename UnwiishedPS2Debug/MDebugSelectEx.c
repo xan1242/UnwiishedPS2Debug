@@ -272,11 +272,19 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 			if (MDebugSelectEx_SonicActionSettings->stageID >= 10)
 				midStageID = (MDebugSelectEx_SonicActionSettings->stageID / 10) - ((MDebugSelectEx_SonicActionSettings->stageID / 100) * 10);
 
+			if (midStageID <= 0)
+				midStageID = 1;
+
+			if (midStageID > 7)
+				midStageID = 7;
+
 			if (MDebugSelectEx_SonicActionSettings->stageID / 100)
 			{
 				MDebugSelectEx_SonicActionSettings->isEvil = 1;
 				if (MDebugSelectEx_SonicActionSettings->stageID == 174)
 					MDebugSelectEx_SonicActionSettings->specialMode = SASM_DragoonBoss;
+				if (MDebugSelectEx_SonicActionSettings->stageID == 175)
+					MDebugSelectEx_SonicActionSettings->isEvil = 0;
 				else if (lowStageID == 5)
 					MDebugSelectEx_SonicActionSettings->specialMode = SASM_Boss;
 				else if (lowStageID == 6)
@@ -289,12 +297,6 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 					MDebugSelectEx_SonicActionSettings->specialMode = SASM_Boss;
 			}
 
-			if (midStageID <= 0)
-				midStageID = 1;
-
-			if (midStageID > 7)
-				midStageID = 7;
-			
 			MDebugSelectEx_SonicActionSettings->adventureMissionIdx = MDebugSelectEx_GetAdventureMissionIdx(MDebugSelectEx_SonicActionSettings->stageID);
 			if (MDebugSelectEx_SonicActionSettings->adventureMissionIdx < 0)
 				MDebugSelectEx_SonicActionSettings->capitalID = MDebugSelectEx_StageToCapitalMap[MDebugSelectEx_SonicActionSettings->adventureMissionIdx].CapitalNo;
