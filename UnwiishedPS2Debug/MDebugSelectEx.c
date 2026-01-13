@@ -283,12 +283,13 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 				MDebugSelectEx_SonicActionSettings->isEvil = 1;
 				if (MDebugSelectEx_SonicActionSettings->stageID == 174)
 					MDebugSelectEx_SonicActionSettings->specialMode = SASM_DragoonBoss;
-				if (MDebugSelectEx_SonicActionSettings->stageID == 175)
-					MDebugSelectEx_SonicActionSettings->isEvil = 0;
 				else if (lowStageID == 5)
 					MDebugSelectEx_SonicActionSettings->specialMode = SASM_Boss;
 				else if (lowStageID == 6)
 					MDebugSelectEx_SonicActionSettings->specialMode = SASM_Entrance;
+
+				if (MDebugSelectEx_SonicActionSettings->stageID == 175)
+					MDebugSelectEx_SonicActionSettings->isEvil = 0;
 			}
 			else
 			{
