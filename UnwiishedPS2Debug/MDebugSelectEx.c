@@ -42,6 +42,7 @@ const char* MDebugSelectEx_SonicAction_BossNames[] =
 	"Egg Lancer",
 	"Egg Dragoon",
 	"Dark Gaia",
+	"Perfect Dark Gaia",
 };
 
 const char* MDebugSelectEx_SonicAction_StageTypes[] =
@@ -79,6 +80,9 @@ void MDebugSelectEx_GetStageName(int stageID, char* outBuffer)
 {
 	switch (stageID)
 	{
+		case 175:
+			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[8]);
+			return;
 		case 174:
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[6]);
 			return;
