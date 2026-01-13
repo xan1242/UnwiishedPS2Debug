@@ -44,10 +44,17 @@ const char* MDebugSelectEx_SonicAction_BossNames[] =
 	"Dark Gaia",
 };
 
+const char* MDebugSelectEx_SonicAction_StageTypes[] =
+{
+	"Normal",
+	"Mission",
+};
 
 uint32_t controllerDummy[4] = { 0 };
 
 SonicActionSettings* MDebugSelectEx_SonicActionSettings = (SonicActionSettings*)0x87F830;
+StageToCapitalIdMap* MDebugSelectEx_StageToCapitalMap = (StageToCapitalIdMap*)0x7A9560;
+const size_t MDebugSelectEx_StageToCapitalMap_Size = 0x5A;
 
 void MDebugSelectEx_GotoSonicActionMode()
 {
@@ -58,28 +65,12 @@ void MDebugSelectEx_GotoSonicActionMode()
 	*(int*)p_ModeUpdateTrigger = 1;
 }
 
-int MDebugSelectEx_GetMissionID(int stageID)
+int MDebugSelectEx_GetAdventureMissionIdx(int stageID)
 {
-	switch (stageID)
+	for (int i = 0; i < MDebugSelectEx_StageToCapitalMap_Size; i++)
 	{
-		case 174: // Egg Dragoon
-			return 87;
-		case 155: // Dark Guardian
-			return 76;
-		case 145: // Dark Gaia Phoenix
-			return 70;
-		case 125: // Dark Moray
-			return 58;
-		case 75: // Dark Gaia
-			return 46;
-		case 65: // Egg Lancer
-			return 40;
-		case 35: // Egg Devil Ray
-			return 22;
-		case 15: // Egg Beetle
-			return 10;
-		default:
-			break;
+		if (MDebugSelectEx_StageToCapitalMap[i].StageNo == stageID)
+			return i;
 	}
 	return 0;
 }
@@ -156,6 +147,73 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 {
 	switch (setting)
 	{
+		case SAS_LoadType:
+		{
+			MDebugSelectEx_SonicActionSettings->LoadType += inc;
+			if (MDebugSelectEx_SonicActionSettings->LoadType < 0)
+				MDebugSelectEx_SonicActionSettings->LoadType = 0;
+			break;
+		}
+		case SAS_StartCamera:
+		{
+			MDebugSelectEx_SonicActionSettings->StartCamera += inc;
+			if (MDebugSelectEx_SonicActionSettings->StartCamera < 0)
+				MDebugSelectEx_SonicActionSettings->StartCamera = 0;
+			break;
+		}
+		case SAS_StartPoint:
+		{
+			MDebugSelectEx_SonicActionSettings->StartPoint += inc;
+			if (MDebugSelectEx_SonicActionSettings->StartPoint < 0)
+				MDebugSelectEx_SonicActionSettings->StartPoint = 0;
+			break;
+		}
+		case SAS_ClearNum:
+		{
+			MDebugSelectEx_SonicActionSettings->ClearNum += inc;
+			if (MDebugSelectEx_SonicActionSettings->ClearNum < 0)
+				MDebugSelectEx_SonicActionSettings->ClearNum = 0;
+			break;
+		}
+		case SAS_LimitTime:
+		{
+			float fInc = (float)inc;
+			MDebugSelectEx_SonicActionSettings->LimitTime += fInc;
+			if (MDebugSelectEx_SonicActionSettings->LimitTime < 0)
+				MDebugSelectEx_SonicActionSettings->LimitTime = 0;
+			MDebugSelectEx_SonicActionSettings->padd1_unk = 0; // #TODO figure out what this is, if it's set it messes with the time limit
+			break;
+		}
+		case SAS_MissionType:
+		{
+			MDebugSelectEx_SonicActionSettings->MissionType += inc;
+			if (MDebugSelectEx_SonicActionSettings->MissionType < -1)
+				MDebugSelectEx_SonicActionSettings->MissionType = -1;
+			break;
+		}
+		case SAS_MissionId:
+		{
+			MDebugSelectEx_SonicActionSettings->MissionId += inc;
+			if (MDebugSelectEx_SonicActionSettings->MissionId < 0)
+				MDebugSelectEx_SonicActionSettings->MissionId = 0;
+			break;
+		}
+		case SAS_StageType:
+		{
+			MDebugSelectEx_SonicActionSettings->StageType += inc;
+			if (MDebugSelectEx_SonicActionSettings->StageType < 0)
+				MDebugSelectEx_SonicActionSettings->StageType = SONICACTIONSETTINGS_NUM_STAGETYPE - 1;
+
+			MDebugSelectEx_SonicActionSettings->StageType %= SONICACTIONSETTINGS_NUM_STAGETYPE;
+			break;
+		}
+		case SAS_UniqId:
+		{
+			MDebugSelectEx_SonicActionSettings->UniqId += inc;
+			if (MDebugSelectEx_SonicActionSettings->UniqId < 0)
+				MDebugSelectEx_SonicActionSettings->UniqId = 0;
+			break;
+		}
 		case SAS_SpecialMode:
 		{
 			MDebugSelectEx_SonicActionSettings->specialMode += inc;
@@ -179,6 +237,7 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 				MDebugSelectEx_SonicActionSettings->endArea = SONICACTIONSETTINGS_NUM_AREAS - 1;
 
 			MDebugSelectEx_SonicActionSettings->endArea %= SONICACTIONSETTINGS_NUM_AREAS;
+			MDebugSelectEx_SonicActionSettings->mission_EndArea = MDebugSelectEx_SonicActionSettings->endArea;
 			break;
 		}
 		case SAS_StartArea:
@@ -188,6 +247,7 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 				MDebugSelectEx_SonicActionSettings->startArea = SONICACTIONSETTINGS_NUM_AREAS - 1;
 
 			MDebugSelectEx_SonicActionSettings->startArea %= SONICACTIONSETTINGS_NUM_AREAS;
+			MDebugSelectEx_SonicActionSettings->mission_StartArea = MDebugSelectEx_SonicActionSettings->startArea;
 			break;
 		}
 		case SAS_Stage:
@@ -196,9 +256,12 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 			if (MDebugSelectEx_SonicActionSettings->stageID < 0)
 				MDebugSelectEx_SonicActionSettings->stageID = 0;
 
+			MDebugSelectEx_SonicActionSettings->StageNo = MDebugSelectEx_SonicActionSettings->stageID;
 			MDebugSelectEx_SonicActionSettings->specialMode = SASM_Normal;
 			MDebugSelectEx_SonicActionSettings->startArea = 0;
+			MDebugSelectEx_SonicActionSettings->mission_StartArea = MDebugSelectEx_SonicActionSettings->startArea;
 			MDebugSelectEx_SonicActionSettings->endArea = 0;
+			MDebugSelectEx_SonicActionSettings->mission_EndArea = MDebugSelectEx_SonicActionSettings->endArea;
 
 			int lowStageID = 0;
 			int midStageID = 0;
@@ -231,10 +294,12 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 
 			if (midStageID > 7)
 				midStageID = 7;
-
-
-			MDebugSelectEx_SonicActionSettings->capitalID = midStageID - 1;
-			MDebugSelectEx_SonicActionSettings->missionID = MDebugSelectEx_GetMissionID(MDebugSelectEx_SonicActionSettings->stageID);
+			
+			MDebugSelectEx_SonicActionSettings->adventureMissionIdx = MDebugSelectEx_GetAdventureMissionIdx(MDebugSelectEx_SonicActionSettings->stageID);
+			if (MDebugSelectEx_SonicActionSettings->adventureMissionIdx < 0)
+				MDebugSelectEx_SonicActionSettings->capitalID = MDebugSelectEx_StageToCapitalMap[MDebugSelectEx_SonicActionSettings->adventureMissionIdx].CapitalNo;
+			else
+				MDebugSelectEx_SonicActionSettings->capitalID = midStageID - 1;
 
 			break;
 		}
@@ -247,11 +312,11 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 			MDebugSelectEx_SonicActionSettings->capitalID %= SONICACTIONSETTINGS_NUM_CAPITAL;
 			break;
 		}
-		case SAS_Mission:
+		case SAS_MissionIdx:
 		{
-			MDebugSelectEx_SonicActionSettings->missionID += inc;
-			if (MDebugSelectEx_SonicActionSettings->missionID < 0)
-				MDebugSelectEx_SonicActionSettings->missionID = 0;
+			MDebugSelectEx_SonicActionSettings->adventureMissionIdx += inc;
+			if (MDebugSelectEx_SonicActionSettings->adventureMissionIdx < 0)
+				MDebugSelectEx_SonicActionSettings->adventureMissionIdx = 0;
 			break;
 		}
 		default:
@@ -319,12 +384,12 @@ uint32_t* MDebugSelectEx_hkGetInput(void* unk, int type)
 	{
 		MDebugSelectEx_SonicAction_Selection--;
 		if (MDebugSelectEx_SonicAction_Selection < 0)
-			MDebugSelectEx_SonicAction_Selection = MDEBUGSELECTEX_NUM_SONICACTIONSETTINGS - 1;
+			MDebugSelectEx_SonicAction_Selection = MDEBUGSELECTEX_NUM_SETTINGS - 1;
 	}
 	else if (buttonMask2 & 0x4000) // down
 	{
 		MDebugSelectEx_SonicAction_Selection++;
-		MDebugSelectEx_SonicAction_Selection %= MDEBUGSELECTEX_NUM_SONICACTIONSETTINGS;
+		MDebugSelectEx_SonicAction_Selection %= MDEBUGSELECTEX_NUM_SETTINGS;
 	}
 
 	uint32_t incButtonMask = buttonMask2;
@@ -353,7 +418,9 @@ void MDebugSelectEx_hk_nnPrint(int x, int y, const char* fmt)
 
 	const int baseX = 33;
 	const int baseCurX = baseX - 3;
-	const int baseY = 2;
+	int baseY = 3;
+	if (MDebugSelectEx_SonicAction_Selection >= MDEBUGSELECTEX_POS_MISSIONSETTINGS)
+		baseY++;
 
 	int posY = MDebugSelectEx_SonicAction_Selection + baseY;
 
@@ -373,14 +440,25 @@ void MDebugSelectEx_HandleSonicActionSetup()
 	MDebugSelectEx_GetStageName(MDebugSelectEx_SonicActionSettings->stageID, stgName);
 
 	nnPrint(baseTitleX, baseY - 1, "< SONIC ACTION SETTINGS >");
-	nnPrint(baseX, posY++, "Mission = %d", MDebugSelectEx_SonicActionSettings->missionID);
+	nnPrint(baseTitleX + 2, posY++, "%s", stgName);
+	nnPrint(baseX, posY++, "AdvMissionIdx = %d", MDebugSelectEx_SonicActionSettings->adventureMissionIdx);
 	nnPrint(baseX, posY++, "Capital = %s", MDebugSelectEx_GetSettingName(SAS_Capital, MDebugSelectEx_SonicActionSettings->capitalID));
 	nnPrint(baseX, posY++, "Stage = Stage%03d", MDebugSelectEx_SonicActionSettings->stageID);
 	nnPrint(baseX, posY++, "StartArea = %c", MDebugSelectEx_SonicAction_AreaLetters[MDebugSelectEx_SonicActionSettings->startArea]);
 	nnPrint(baseX, posY++, "EndArea = %c", MDebugSelectEx_SonicAction_AreaLetters[MDebugSelectEx_SonicActionSettings->endArea]);
 	nnPrint(baseX, posY++, "IsEvil = %d", MDebugSelectEx_SonicActionSettings->isEvil);
 	nnPrint(baseX, posY++, "Mode = %s", MDebugSelectEx_GetSettingName(SAS_SpecialMode, MDebugSelectEx_SonicActionSettings->specialMode));
-	nnPrint(baseTitleX + 2, ++posY, "%s", stgName);
+	nnPrint(baseTitleX + 2, posY++, "< MISSION SETTINGS >");
+	nnPrint(baseX, posY++, "UniqId = %hd", MDebugSelectEx_SonicActionSettings->UniqId);
+	nnPrint(baseX, posY++, "StageType = %s", MDebugSelectEx_SonicAction_StageTypes[MDebugSelectEx_SonicActionSettings->StageType]);
+	nnPrint(baseX, posY++, "MissionId = %hd", MDebugSelectEx_SonicActionSettings->MissionId);
+	nnPrint(baseX, posY++, "MissionType = %hd", MDebugSelectEx_SonicActionSettings->MissionType);
+	nnPrint(baseX, posY++, "LimitTime = %.1f", MDebugSelectEx_SonicActionSettings->LimitTime);
+	nnPrint(baseX, posY++, "ClearNum = %hd", MDebugSelectEx_SonicActionSettings->ClearNum);
+	nnPrint(baseX, posY++, "StartPoint = %hd", MDebugSelectEx_SonicActionSettings->StartPoint);
+	nnPrint(baseX, posY++, "StartCamera = %hd", MDebugSelectEx_SonicActionSettings->StartCamera);
+	nnPrint(baseX, posY++, "LoadType = %hd", MDebugSelectEx_SonicActionSettings->LoadType);
+
 }
 
 int MDebugSelectEx_UpdateSelectionThingy(MDebugSelect* that, int(*fn)(MDebugSelect*))
