@@ -172,6 +172,15 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 			MDebugSelectEx_SonicActionSettings->isEvil = state;
 			break;
 		}
+		case SAS_EndArea:
+		{
+			MDebugSelectEx_SonicActionSettings->endArea += inc;
+			if (MDebugSelectEx_SonicActionSettings->endArea < 0)
+				MDebugSelectEx_SonicActionSettings->endArea = SONICACTIONSETTINGS_NUM_AREAS - 1;
+
+			MDebugSelectEx_SonicActionSettings->endArea %= SONICACTIONSETTINGS_NUM_AREAS;
+			break;
+		}
 		case SAS_StartArea:
 		{
 			MDebugSelectEx_SonicActionSettings->startArea += inc;
@@ -189,6 +198,7 @@ void MDebugSelectEx_ChangeSetting(int setting, int inc)
 
 			MDebugSelectEx_SonicActionSettings->specialMode = SASM_Normal;
 			MDebugSelectEx_SonicActionSettings->startArea = 0;
+			MDebugSelectEx_SonicActionSettings->endArea = 0;
 
 			int lowStageID = 0;
 			int midStageID = 0;
@@ -367,10 +377,10 @@ void MDebugSelectEx_HandleSonicActionSetup()
 	nnPrint(baseX, posY++, "Capital = %s", MDebugSelectEx_GetSettingName(SAS_Capital, MDebugSelectEx_SonicActionSettings->capitalID));
 	nnPrint(baseX, posY++, "Stage = Stage%03d", MDebugSelectEx_SonicActionSettings->stageID);
 	nnPrint(baseX, posY++, "StartArea = %c", MDebugSelectEx_SonicAction_AreaLetters[MDebugSelectEx_SonicActionSettings->startArea]);
+	nnPrint(baseX, posY++, "EndArea = %c", MDebugSelectEx_SonicAction_AreaLetters[MDebugSelectEx_SonicActionSettings->endArea]);
 	nnPrint(baseX, posY++, "IsEvil = %d", MDebugSelectEx_SonicActionSettings->isEvil);
 	nnPrint(baseX, posY++, "Mode = %s", MDebugSelectEx_GetSettingName(SAS_SpecialMode, MDebugSelectEx_SonicActionSettings->specialMode));
 	nnPrint(baseTitleX + 2, ++posY, "%s", stgName);
-
 }
 
 int MDebugSelectEx_UpdateSelectionThingy(MDebugSelect* that, int(*fn)(MDebugSelect*))

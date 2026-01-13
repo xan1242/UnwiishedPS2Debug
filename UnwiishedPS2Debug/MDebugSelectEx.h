@@ -16,12 +16,12 @@ typedef struct
 	int capitalID; 
 	int stageID;
 	int startArea;
-	int currentArea;
+	int endArea;
 	int isEvil;
 	int specialMode;
 } SonicActionSettings;
 
-#define MDEBUGSELECTEX_NUM_SONICACTIONSETTINGS 6
+#define MDEBUGSELECTEX_NUM_SONICACTIONSETTINGS 7
 #define SONICACTIONSETTINGS_NUM_CAPITAL 7
 #define SONICACTIONSETTINGS_NUM_AREAS 7
 #define SONICACTIONSETTINGS_NUM_SPECIALMODE 6
@@ -32,6 +32,7 @@ typedef enum
 	SAS_Capital,
 	SAS_Stage,
 	SAS_StartArea,
+	SAS_EndArea,
 	SAS_IsEvil,
 	SAS_SpecialMode,
 } SonicActionSettingEnum;
