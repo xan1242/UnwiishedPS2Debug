@@ -1,10 +1,28 @@
-#include <stdint.h>
 #include "UnwiishedPS2Debug.h"
 #include "nnRenderStuff.h"
 #include "nnPrint.h"
 #include "includes/minjector.h"
 #include "FPSDisplay.h"
 #include "MDebugSelectEx.h"
+#include "MActionSonic.h"
+#include "MAdventure.h"
+#include "MItemGet.h"
+#include "MOption.h"
+#include "MTitle.h"
+#include "MLoad.h"
+#include "MSave.h"
+#include "MWorld.h"
+#include "MAttract.h"
+#include "MMovie.h"
+#include "MScenario.h"
+#include "MCredit.h"
+#include "MSaveMain.h"
+#include "MAutoSave.h"
+#include "MGalleryTop.h"
+#include "MClearResult.h"
+#include "MLastResult.h"
+#include "MEvilResult3.h"
+#include "MNextStageSelect.h"
 
 // functions
 void(*UnwiishedPS2Debug_uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
@@ -153,6 +171,8 @@ void UnwiishedPS2Debug_MainLoopHook(void* obj)
 	if (DisplayFPSMode != 0)
 		FPSDisplay_Draw();
 
+	FPSDisplay_ClearDrawTask();
+
 	HandleInputs();
 }
 
@@ -175,6 +195,27 @@ void UnwiishedPS2Debug_Init()
 	nnRenderStuff_Init();
 	nnPrint_Init();
 	MDebugSelectEx_Init();
+
+	// There isn't an easy, global way to measure drawing as it's chain called from a parent function (that has nothing to do with drawing) in each class' vftable, so we have to hook each mode individually for profiling...
+	MActionSonic_Init();
+	MAdventure_Init();
+	MItemGet_Init();
+	MOption_Init();
+	MTitle_Init();
+	MLoad_Init();
+	MSave_Init();
+	MWorld_Init();
+	MAttract_Init();
+	MMovie_Init();
+	MScenario_Init();
+	MCredit_Init();
+	MSaveMain_Init();
+	MAutoSave_Init();
+	MGalleryTop_Init();
+	MClearResult_Init();
+	MLastResult_Init();
+	MEvilResult3_Init();
+	MNextStageSelect_Init();
 
 	uintptr_t loc_4FF7B0 = 0x4FF7B0;
 	UnwiishedPS2Debug_uMainLoopFunc = (void(*)(void*))(minj_GetBranchDestination(loc_4FF7B0));

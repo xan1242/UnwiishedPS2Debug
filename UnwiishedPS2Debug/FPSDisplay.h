@@ -3,6 +3,10 @@
 
 void FPSDisplay_StartFrame();
 void FPSDisplay_EndFrame();
+void FPSDisplay_StartDrawTask();
+void FPSDisplay_EndDrawTask();
+void FPSDisplay_ProfileDrawTask(void* obj, void(*f)(void*));
+void FPSDisplay_ClearDrawTask();
 void FPSDisplay_Draw();
 void FPSDisplay_SetMode(unsigned int mode);
 unsigned int FPSDisplay_GetMode();

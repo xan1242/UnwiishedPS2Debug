@@ -15,6 +15,25 @@ nnPrint.c \
 bWare.c \
 FPSDisplay.c \
 MDebugSelectEx.c \
+MActionSonic.c \
+MAdventure.c \
+MItemGet.c \
+MOption.c \
+MTitle.c \
+MLoad.c \
+MSave.c \
+MWorld.c \
+MAttract.c \
+MMovie.c \
+MScenario.c \
+MCredit.c \
+MSaveMain.c \
+MAutoSave.c \
+MGalleryTop.c \
+MClearResult.c \
+MLastResult.c \
+MEvilResult3.c \
+MNextStageSelect.c \
 UnwiishedPS2Debug.c \
 
 

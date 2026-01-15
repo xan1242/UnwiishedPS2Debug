@@ -45,6 +45,63 @@
     <ClCompile Include="MDebugSelectEx.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MActionSonic.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MAdventure.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MItemGet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MOption.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MTitle.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MLoad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MSave.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MWorld.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MAttract.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MMovie.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MScenario.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MCredit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MSaveMain.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MAutoSave.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MGalleryTop.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MClearResult.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MLastResult.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MEvilResult3.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MNextStageSelect.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="linkfile">
@@ -83,6 +140,63 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MDebugSelectEx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MActionSonic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MAdventure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MItemGet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MOption.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MTitle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MLoad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MSave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MWorld.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MAttract.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MMovie.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MScenario.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MCredit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MSaveMain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MAutoSave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MGalleryTop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MClearResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MLastResult.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MEvilResult3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MNextStageSelect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

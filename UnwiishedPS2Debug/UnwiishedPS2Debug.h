@@ -4,6 +4,7 @@
 #include "gprintf.h"
 #include <stdbool.h>
 #include <stddef.h>
+#include <stdint.h>
 
 #if (defined __DEBUG) || (defined __ENABLELOG)
 #define LOG(fmt, ...) gprintf("UnwiishedPS2Debug: " fmt, ##__VA_ARGS__)
