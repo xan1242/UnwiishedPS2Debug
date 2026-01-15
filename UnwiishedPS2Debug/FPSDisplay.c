@@ -113,7 +113,7 @@ void FPSDisplay_Draw()
 
 	if (FPSDisplay_Mode & FPSDISPLAY_MODE_FLAG_FRAMERATE)
 	{
-		if ((PreviousCpuFrameRate < PreviousGpuFrameRate) && PreviousGpuFrameTime)
+		if ((PreviousCpuFrameRate < PreviousGpuFrameRate) || !PreviousGpuFrameTime)
 			dispFR = PreviousCpuFrameRate;
 		else
 			dispFR = PreviousGpuFrameRate;
