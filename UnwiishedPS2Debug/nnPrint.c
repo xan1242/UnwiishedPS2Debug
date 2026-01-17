@@ -146,17 +146,17 @@ void nnPrint_hkSetVideoMode(void* obj, int mode, void(*fn)(void*, int))
 
 void nnPrint_hkSetVideoMode_1(void* obj, int mode)
 {
-	return nnPrint_hkSetVideoMode(obj, mode, SetVideoMode_1);
+	return nnPrint_hkSetVideoMode(obj, mode, nnPrint_SetVideoMode_1);
 }
 
 void nnPrint_hkSetVideoMode_2(void* obj, int mode)
 {
-	return nnPrint_hkSetVideoMode(obj, mode, SetVideoMode_2);
+	return nnPrint_hkSetVideoMode(obj, mode, nnPrint_SetVideoMode_2);
 }
 
 void nnPrint_hkSetVideoMode_3(void* obj, int mode)
 {
-	return nnPrint_hkSetVideoMode(obj, mode, SetVideoMode_3);
+	return nnPrint_hkSetVideoMode(obj, mode, nnPrint_SetVideoMode_3);
 }
 
 void nnPrint_InitDebugPrint(int sizeX, int sizeY)
