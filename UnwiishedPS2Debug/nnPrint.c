@@ -20,10 +20,10 @@ uintptr_t p_qword_768D10;
 uintptr_t loc_D0BA4;
 uintptr_t loc_D0B5C;
 
-void(*SetVideoMode_1)(void* obj, int mode) = (void(*)(void*, int))(0);
-void(*SetVideoMode_2)(void* obj, int mode) = (void(*)(void*, int))(0);
-void(*SetVideoMode_3)(void* obj, int mode) = (void(*)(void*, int))(0);
-void(*uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
+void(*nnPrint_SetVideoMode_1)(void* obj, int mode) = (void(*)(void*, int))(0);
+void(*nnPrint_SetVideoMode_2)(void* obj, int mode) = (void(*)(void*, int))(0);
+void(*nnPrint_SetVideoMode_3)(void* obj, int mode) = (void(*)(void*, int))(0);
+void(*nnPrint_uMainLoopFunc)(void* obj) = (void(*)(void*))(0);
 
 void(*nnPrint)(int x, int y, const char* fmt, ...) = (void(*)(int, int, const char*, ...))(0);
 void(*nnSetPrintColor)(unsigned int color) = (void(*)(unsigned int))(0);
@@ -301,19 +301,19 @@ void nnPrint_Init()
 	loc_D0B5C = 0xD0B5C;
 
 	uintptr_t loc_4FF7B0 = 0x4FF7B0;
-	uMainLoopFunc = (void(*)(void*))(minj_GetBranchDestination(loc_4FF7B0));
+	nnPrint_uMainLoopFunc = (void(*)(void*))(minj_GetBranchDestination(loc_4FF7B0));
 	minj_MakeCALL(loc_4FF7B0, (uintptr_t)&nnPrint_MainLoopHook);
 
 	uintptr_t loc_50132C = 0x50132C;
-	SetVideoMode_1 = (void(*)(void*, int))(minj_GetBranchDestination(loc_50132C));
+	nnPrint_SetVideoMode_1 = (void(*)(void*, int))(minj_GetBranchDestination(loc_50132C));
 	minj_MakeCALL(loc_50132C, (uintptr_t)&nnPrint_hkSetVideoMode_1);
 
 	uintptr_t loc_5013AC = 0x5013AC;
-	SetVideoMode_2 = (void(*)(void*, int))(minj_GetBranchDestination(loc_5013AC));
+	nnPrint_SetVideoMode_2 = (void(*)(void*, int))(minj_GetBranchDestination(loc_5013AC));
 	minj_MakeCALL(loc_5013AC, (uintptr_t)&nnPrint_hkSetVideoMode_2);
 
 	uintptr_t loc_501430 = 0x501430;
-	SetVideoMode_3 = (void(*)(void*, int))(minj_GetBranchDestination(loc_501430));
+	nnPrint_SetVideoMode_3 = (void(*)(void*, int))(minj_GetBranchDestination(loc_501430));
 	minj_MakeCALL(loc_501430, (uintptr_t)&nnPrint_hkSetVideoMode_3);
 
 	uintptr_t loc_25D270 = 0x25D270;
