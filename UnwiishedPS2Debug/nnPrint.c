@@ -113,8 +113,8 @@ void nnInitPrint(char* buffer, int max, void* printTex)
 	if (smth2 == -256.0f)
 		nnsPrintAspect.y = nnsPrintAspect.y * 1.1428572f;
 
-	nnsPrint2d.x = 16.0 * (smth1 + 2048.0f);
-	nnsPrint2d.y = 16.0 * (smth2 + 2048.0f);
+	nnsPrint2d.x = 16.0f * (smth1 + 2048.0f);
+	nnsPrint2d.y = 16.0f * (smth2 + 2048.0f);
 	cb1 = PXSetupCB(nnsPrintSvrObj->cb_buf1, 0x90, 8);
 	//LOG("PXSetupCB cb1 = 0x%x\n", cb1);
 	PXSetCB(cb1, 0, 8, 5);
