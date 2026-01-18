@@ -46,7 +46,7 @@ DEFINES = -DMINJECTOR_MINIMAL -DMINJECTOR_NO_ADJUST
 BASE_ADDRESS = 0x02100000
 EE_LINKFILE = linkfile
 
-EE_CFLAGS += -fno-zero-initialized-in-bss $(DEFINES)
+EE_CFLAGS += -fno-zero-initialized-in-bss -msingle-float -Wdouble-promotion $(DEFINES)
 EE_LDFLAGS += -Wl,--entry=init -Wl,-Map,../build/UnwiishedPS2Debug.map -Wl,-exclude-libs,ALL -Wl,'--defsym=BASE_ADDRESS=$(BASE_ADDRESS)' $(DEFINES)
 EE_INCS += -Iincludes
 
