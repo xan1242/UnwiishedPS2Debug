@@ -137,8 +137,9 @@ void nnExitPrint()
 }
 
 
-void nnPrint_hkSetVideoMode(void* obj, int mode, void(*fn)(void*, int))
+__attribute__((noinline)) void nnPrint_hkSetVideoMode(void* obj, int mode, void(*fn)(void*, int))
 {
+	asm volatile("");
 	nnExitPrint();
 	fn(obj, mode);
 	nnInitPrint(PrintBuf, NUM_ITEMS, NULL);
