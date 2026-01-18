@@ -10,6 +10,7 @@ void FPSDisplay_ClearDrawTask();
 void FPSDisplay_Draw();
 void FPSDisplay_SetMode(unsigned int mode);
 unsigned int FPSDisplay_GetMode();
+void FPSDisplay_MeasureVSyncTime();
 
 #define FPSDISPLAY_MODE_FLAG_ONOFF (1 << 1)
 #define FPSDISPLAY_MODE_FLAG_CONSTANT (1 << 2)

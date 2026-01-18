@@ -9,6 +9,7 @@ EE_BIN = ../build/UnwiishedPS2Debug.elf
 EE_OBJS = main.o \
 includes\minjector.c \
 gprintf.c \
+LowLevelPS2.c \
 nnRenderStuff.c \
 nnFlushPrint.c \
 nnPrint.c \

@@ -2,6 +2,7 @@
 #include "bWare.h"
 #include "nnPrint.h"
 #include "UnwiishedPS2Debug.h"
+#include "includes/minjector.h"
 
 unsigned int FrameTimingStartTime = 0;
 unsigned int FrameTimingEndTime = 0;
@@ -9,7 +10,14 @@ unsigned int FrameTimingEndTime = 0;
 unsigned int RenderTimingStart = 0;
 unsigned int RenderTimingEnd = 0;
 
-unsigned int* FrameCounter = (unsigned int*)0x87459C;
+unsigned int LastVBlankTime1 = 0;
+unsigned int LastVBlankTime2 = 0;
+
+float PreviousVSyncTime = 0.0f;
+float PreviousVSyncRate = 0.0f;
+
+//unsigned int* FrameCounter = (unsigned int*)0x87459C;
+unsigned int* FrameCounter = (unsigned int*)0x873C50;
 unsigned int last_realtime_frames = 0;
 float PreviousCpuFrameTime = 0.0f;
 float PreviousCpuFrameRate = 0.0f;
@@ -17,8 +25,6 @@ float PreviousGpuFrameTime = 0.0f;
 float PreviousGpuFrameRate = 0.0f;
 
 unsigned int FPSDisplay_Mode = FPSDISPLAY_MODE_FLAG_ONOFF | FPSDISPLAY_MODE_FLAG_FRAMETIME | FPSDISPLAY_MODE_FLAG_FRAMERATE;
-
-// #TODO: reduce jitter by sampling and calculating averages!
 
 void FPSDisplay_StartFrame()
 {
@@ -38,6 +44,12 @@ void FPSDisplay_StartDrawTask()
 void FPSDisplay_EndDrawTask()
 {
 	RenderTimingEnd = bGetTicker();
+}
+
+void FPSDisplay_MeasureVSyncTime()
+{
+	LastVBlankTime1 = LastVBlankTime2;
+	LastVBlankTime2 = bGetTicker();
 }
 
 void FPSDisplay_ProfileDrawTask(void* obj, void(*f)(void*))
@@ -63,14 +75,29 @@ unsigned int FPSDisplay_GetMode()
 	return FPSDisplay_Mode;
 }
 
+float FPSDisplay_GetFPS()
+{
+	// get minimum FPS
+	float smallest = PreviousCpuFrameRate;
+	if (PreviousVSyncRate < smallest)
+		smallest = PreviousVSyncRate;
+	if ((PreviousGpuFrameRate < smallest) && PreviousGpuFrameTime)
+		smallest = PreviousGpuFrameRate;
+
+	return smallest;
+}
+
+// TODO: values may need a sample buffer to reduce jitter and show the real values properly...
 
 void FPSDisplay_Draw()
 {
+	float vsyncFT = 0.0f;
+	//float vsyncFR = 0.0f;
 	float renderFT = 0.0f;
 	float renderFR = 0.0f;
 	float cpuFT = 0.0f;
 	//float cpuFR = 0.0f;
-	float dispFR = 0.0f;
+	//float dispFR = 0.0f;
 
 	if (!(FPSDisplay_Mode & FPSDISPLAY_MODE_FLAG_ONOFF))
 		return;
@@ -81,6 +108,7 @@ void FPSDisplay_Draw()
 
 		renderFT = bGetTickerDifference(RenderTimingStart, RenderTimingEnd);
 		cpuFT = bGetTickerDifference(FrameTimingStartTime, FrameTimingEndTime);
+		vsyncFT = bGetTickerDifference(LastVBlankTime1, LastVBlankTime2);
 
 		//if (renderFT != 0.0f)
 		//	PreviousGpuFrameTime = renderFT;
@@ -96,29 +124,31 @@ void FPSDisplay_Draw()
 			PreviousCpuFrameRate = 1000.0f / cpuFT;
 			PreviousGpuFrameRate = renderFR;
 		}
+		if (vsyncFT)
+		{
+			PreviousVSyncTime = vsyncFT;
+			PreviousVSyncRate = 1000.0f / vsyncFT;
+		}
 	}
 
 	int Ypos = 0;
+	int Xpos = 0;
 
 	nnSetPrintColor(0xFFFFFFFF);
 	if (FPSDisplay_Mode & FPSDISPLAY_MODE_FLAG_FRAMETIME)
 	{
-		nnPrint(0, Ypos, "C: %.2f ms", PreviousCpuFrameTime);
+		nnPrint(Xpos, Ypos, "C: %.2fms", PreviousCpuFrameTime);
+		Xpos += 11;
+		nnPrint(Xpos, Ypos, "V: %.2fms", PreviousVSyncTime);
+		Xpos += 11;
 		if (PreviousGpuFrameTime)
-			nnPrint(13, Ypos, "G: %.2fms", PreviousGpuFrameTime);
+			nnPrint(Xpos, Ypos, "G: %.2fms", PreviousGpuFrameTime);
 		Ypos++;
 	}
 
-
-
 	if (FPSDisplay_Mode & FPSDISPLAY_MODE_FLAG_FRAMERATE)
 	{
-		if ((PreviousCpuFrameRate < PreviousGpuFrameRate) || !PreviousGpuFrameTime)
-			dispFR = PreviousCpuFrameRate;
-		else
-			dispFR = PreviousGpuFrameRate;
-
-		nnPrint(0, Ypos, "F: %.2f fps", dispFR);
+		nnPrint(0, Ypos, "F: %.2f fps", FPSDisplay_GetFPS());
 		Ypos++;
 	}
 }

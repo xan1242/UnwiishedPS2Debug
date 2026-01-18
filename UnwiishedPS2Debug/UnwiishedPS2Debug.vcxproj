@@ -164,6 +164,7 @@ copy /y "$(NMakeOutput)" "!target!"
     <ClCompile Include="FPSDisplay.c" />
     <ClCompile Include="gprintf.c" />
     <ClCompile Include="includes\minjector.c" />
+    <ClCompile Include="LowLevelPS2.c" />
     <ClCompile Include="MActionSonic.c" />
     <ClCompile Include="MAdventure.c" />
     <ClCompile Include="main.c" />
@@ -199,6 +200,7 @@ copy /y "$(NMakeOutput)" "!target!"
     <ClInclude Include="FPSDisplay.h" />
     <ClInclude Include="gprintf.h" />
     <ClInclude Include="includes\minjector.h" />
+    <ClInclude Include="LowLevelPS2.h" />
     <ClInclude Include="MActionSonic.h" />
     <ClInclude Include="MAdventure.h" />
     <ClInclude Include="MAttract.h" />

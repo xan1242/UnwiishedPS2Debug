@@ -7,5 +7,6 @@
 
 unsigned int bGetTicker();
 float bGetTickerDifference(unsigned int start_ticks, unsigned int end_ticks);
+//unsigned int MyGetFixTickerDifference(unsigned int start_ticks, unsigned int end_ticks);
 
 #endif

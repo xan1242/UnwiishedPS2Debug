@@ -102,6 +102,9 @@
     <ClCompile Include="MNextStageSelect.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="LowLevelPS2.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="linkfile">
@@ -197,6 +200,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MNextStageSelect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LowLevelPS2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

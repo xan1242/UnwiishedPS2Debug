@@ -6,6 +6,7 @@
 #include "nnPrint.h"
 #include "nngPrintTexture.h"
 #include "nnFlushPrint.h"
+#include "LowLevelPS2.h"
 
 uintptr_t p_nnsPrintNum;
 uintptr_t p_nnsPrintMax;
@@ -189,7 +190,7 @@ uintptr_t nnPrint_DerefGP(uintptr_t loc)
 
 void nnPrint_MainLoopHook(void* obj)
 {
-	uMainLoopFunc(obj);
+	nnPrint_uMainLoopFunc(obj);
 
 	//nnSetPrintColor(0xFFFFFFFF);
 	//nnPrint(1, 1, "THIS IS A TEST BLABLABLA");

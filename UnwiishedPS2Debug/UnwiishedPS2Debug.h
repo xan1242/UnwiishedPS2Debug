@@ -18,12 +18,6 @@
 
 #define CRC_SLES55380 0x8C913264
 
-/** Modes for FlushCache */
-#define WRITEBACK_DCACHE  0
-#define INVALIDATE_DCACHE 1
-#define INVALIDATE_ICACHE 2
-#define INVALIDATE_CACHE  3 // Invalidate both data & instruction caches.
-
 #define DISPLAYFPS_MODE_OFF 0
 #define DISPLAYFPS_MODE_ON 1
 #define DISPLAYFPS_MODE_ON_CONSTANT 2
@@ -50,7 +44,6 @@ typedef struct
 // Functions
 void UnwiishedPS2Debug_Init();
 void UnwiishedPS2Debug_PostInit();
-void FlushCache(int op);
 
 extern void* (*UnwiishedPS2Debug_uGetModeManagerThingy)();
 extern void(*UnwiishedPS2Debug_uSetNextGameModeThingy)(void* manager, int mode);

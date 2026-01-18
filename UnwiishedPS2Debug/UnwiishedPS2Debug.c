@@ -1,4 +1,6 @@
 #include "UnwiishedPS2Debug.h"
+#include "LowLevelPS2.h"
+#include "bWare.h"
 #include "nnRenderStuff.h"
 #include "nnPrint.h"
 #include "includes/minjector.h"
@@ -30,10 +32,12 @@ void* (*UnwiishedPS2Debug_uGetModeManagerThingy)() = (void* (*)())(0);
 void(*UnwiishedPS2Debug_uSetNextGameModeThingy)(void* manager, int mode) = (void(*)(void*, int))(0);
 void(*UnwiishedPS2Debug_HeapManager_DispInfo)(int posX, int posY) = (void(*)(int, int))(0);
 int(*UnwiishedPS2Debug_sprintf)(char* buf, const char* fmt, ...) = (int(*)(char*,const char*, ...))(0);
+int(*UnwiishedPS2Debug_VblCallback)(int) = (int(*)(int))(0);
 
 const uintptr_t p_gp = 0x877FF0;
 //uintptr_t p_ButtonMaskThisFrame = p_gp - 0x331C;
 uintptr_t p_ButtonMaskCurrent = p_gp - 0x3324;
+//uintptr_t p_CurrentGameMode = p_gp - 0x75D4;
 uintptr_t p_ModeUpdateTrigger;
 bool bModeTriggerOldState = false;
 
@@ -45,13 +49,6 @@ bool bDisplayFPSTypeTriggerOldState = false;
 
 bool bDisplayHeap = false;
 bool bDisplayHeapTriggerOldState = false;
-
-void (*_FlushCache)(int op) = (void(*)(int))(0);
-void FlushCache(int op)
-{
-	if (_FlushCache)
-		return _FlushCache(op);
-}
 
 void GotoDebugSelectMode()
 {
@@ -182,12 +179,136 @@ void UnwiishedPS2Debug_hkHeapManager_Dump(HeapAlloc* pHeap)
 	LOG_NOHEADER("Size2: %u bytes\nunkptr2: 0x%x\nunkptr3: 0x%x\nunkptr4: 0x%x\nunkptr5: 0x%x\n", pHeap->size2, pHeap->unkptr2, pHeap->unkptr3, pHeap->unkptr4, pHeap->unkptr5);
 }
 
+int UnwiishedPS2Debug_VblCallback_Hook(int unk)
+{
+	FPSDisplay_MeasureVSyncTime();
+	return UnwiishedPS2Debug_VblCallback(unk);
+}
+
+//// SYNC STUFF -- do not use this, it has been ported to a pnach instead...
+//
+////const float targetFrameTime = (1.0f / 59.939998f) * 1000.0f;
+//float targetFrameTime = (1.0f / 60.0f) * 1000.0f;
+////const float targetFrameTime = (1.0f / 30.0f) * 1000.0f;
+//unsigned int lastTicks = 0;
+//
+//
+//bool UnwiishedPS2Debug_SyncRT()
+//{
+//	float ft = bGetTickerDifference(lastTicks, bGetTicker());
+//	return ft >= targetFrameTime;
+//}
+//
+//void(*UnwiishedPS2Debug_PS2SkeletonSync)() = (void(*)())(0);
+//void(*UnwiishedPS2Debug_ADXM_WaitVsync)() = (void(*)())(0x6A64C0);
+//void(*UnwiishedPS2Debug_EnableInterrupts)() = (void(*)())(0x662570);
+
+//void WaitUntilVSync();
+//#ifndef __INTELLISENSE__
+//asm
+//(
+//	".global WaitUntilVSync\n"
+//	"WaitUntilVSync:\n"
+//	"addiu   $sp, -0x10\n"
+//	"sd      $ra, 0($sp)\n"
+//	"nop\n"
+//	"jal     0x662570\n"
+//	"lui     $a0, 0x87\n"
+//	"lw      $v1, 0x3C50($a0)\n"
+//	"lw      $v0, 0x3C50($a0)\n"
+//	"ld      $ra, 0($sp)\n"
+//	"bne     $v1, $v0, locret_20B534\n"
+//	"nop\n"
+//	"loc_20B4F8:\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"lw      $v0, 0x3C50($a0)\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"nop\n"
+//	"beq     $v1, $v0, loc_20B4F8\n"
+//	"ld      $ra, 0($sp)\n"
+//	"locret_20B534:\n"
+//	"addiu   $sp, 0x10\n"
+//	"jr      $ra\n"
+//);
+//#endif
+
+//void WaitUntilVSync()
+//{
+//	uint32_t* VBlankCounter = (uint32_t*)0x873C50;
+//
+//	UnwiishedPS2Debug_EnableInterrupts();
+//	uint32_t initVal = *VBlankCounter;
+//	uint32_t counter = *VBlankCounter;
+//
+//	while (counter == initVal)
+//	{
+//		counter = *VBlankCounter;
+//	}
+//}
+
+//void UnwiishedPS2Debug_CustomSync()
+//{
+//	// #TODO:
+//	// - 30/60fps switch
+//	// - pnach version...
+//	//
+//	const int Mode_Attract = 12;
+//	const int Mode_Movie = 13;
+//	const int Mode_Credit = 16;
+//
+//	int currGameMode = *(int*)(p_CurrentGameMode);
+//
+//	if ((currGameMode == Mode_Attract) || (currGameMode == Mode_Movie) || (currGameMode == Mode_Credit))
+//		return UnwiishedPS2Debug_PS2SkeletonSync();
+//
+//	while (!UnwiishedPS2Debug_SyncRT());
+//	lastTicks = bGetTicker();
+//}
+//
+//void Call_SetRealtimeScale(uintptr_t, float);
+//#ifndef __INTELLISENSE__
+//asm
+//(
+//	".global Call_SetRealtimeScale\n"
+//	"Call_SetRealtimeScale:\n"
+//	"lw $t9, 0($a0)\n"
+//	"lw $t9, 0x34($t9)\n"
+//	"mov.s $f12, $f13\n"
+//	"jr $t9\n"
+//);
+//#endif
+//
+//void SetFrameTimeThing_Hook(uintptr_t mode_obj, uint32_t fps)
+//{
+//	uint32_t videoModeFPS = *(uint32_t*)0x87C3B0;
+//	uint32_t* fpsLimit = (uint32_t*)0x87C3B4;
+//	if (fps == 30)
+//	{
+//		*fpsLimit = videoModeFPS / 2;
+//	}
+//	else
+//	{
+//		*fpsLimit = videoModeFPS;
+//	}
+//
+//	targetFrameTime = (1.0f / (float)*fpsLimit) * 1000.0f;
+//	return Call_SetRealtimeScale(mode_obj, 60.0f / (float)*fpsLimit);
+//}
+
 void UnwiishedPS2Debug_Init()
 {
 	LOG("UnwiishedPS2Debug_Init...\n");
 
-	uintptr_t loc_D01F0 = 0xD01F0;
-	_FlushCache = (void(*)(int))(minj_GetBranchDestination(loc_D01F0));
+	LowLevelPS2_Init();
 
 	uintptr_t loc_FD348 = 0xFD348;
 	UnwiishedPS2Debug_sprintf = (int(*)(char*, const char*, ...))(minj_GetBranchDestination(loc_FD348));
@@ -243,6 +364,16 @@ void UnwiishedPS2Debug_Init()
 
 	// fix "Sonic Action" entry in DebugSelect
 	minj_WriteMemory32(0x754740, 4);
+
+	uintptr_t loc_4FE9D8 = 0x4FE9D8;
+	UnwiishedPS2Debug_VblCallback = (int(*)(int))(minj_GetPtr(loc_4FE9D8, loc_4FE9D8 + 8));
+	minj_WriteLUI_ADDIU(loc_4FE9D8, (uint32_t)&UnwiishedPS2Debug_VblCallback_Hook, MIPSR_a0);
+
+	//uintptr_t loc_500E10 = 0x500E10;
+	//UnwiishedPS2Debug_PS2SkeletonSync = (void(*)())(minj_GetBranchDestination(loc_500E10));
+	//
+	//minj_MakeCALL(loc_500E10, (uintptr_t)&UnwiishedPS2Debug_CustomSync);
+	//minj_MakeJMPwNOP(0xD91A0, (uintptr_t)&SetFrameTimeThing_Hook);
 }
 
 void UnwiishedPS2Debug_PostInit()
@@ -251,4 +382,5 @@ void UnwiishedPS2Debug_PostInit()
 
 	// this needs to happen after nnConfigureSystem...
 	nnPrint_InitDebugPrint(10, 13);
+	//lastTicks = bGetTicker();
 }

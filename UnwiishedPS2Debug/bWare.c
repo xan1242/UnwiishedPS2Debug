@@ -117,4 +117,47 @@ asm
 	".byte 0x46\n"
 );
 
+//asm
+//(
+//	".global MyGetFixTickerDifference\n"
+//	"MyGetFixTickerDifference:\n"
+//	".byte 0x23\n"
+//	".byte 0x10\n"
+//	".byte 0xA4\n"
+//	".byte 0x00\n"
+//	".byte 0x25\n"
+//	".byte 0x01\n"
+//	".byte 0x03\n"
+//	".byte 0x24\n"
+//	".byte 0x80\n"
+//	".byte 0x11\n"
+//	".byte 0x02\n"
+//	".byte 0x00\n"
+//	".byte 0x01\n"
+//	".byte 0x00\n"
+//	".byte 0x60\n"
+//	".byte 0x50\n"
+//	".byte 0xCD\n"
+//	".byte 0x01\n"
+//	".byte 0x00\n"
+//	".byte 0x00\n"
+//	".byte 0x1B\n"
+//	".byte 0x00\n"
+//	".byte 0x43\n"
+//	".byte 0x00\n"
+//	".byte 0x12\n"
+//	".byte 0x10\n"
+//	".byte 0x00\n"
+//	".byte 0x00\n"
+//	".byte 0x08\n"
+//	".byte 0x00\n"
+//	".byte 0xE0\n"
+//	".byte 0x03\n"
+//	".byte 0x00\n"
+//	".byte 0x00\n"
+//	".byte 0x00\n"
+//	".byte 0x00\n"
+//
+//);
+
 #endif
