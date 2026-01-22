@@ -51,8 +51,6 @@ const char* MDebugSelectEx_SonicAction_StageTypes[] =
 	"Mission",
 };
 
-uint32_t controllerDummy[4] = { 0 };
-
 SonicActionSettings* MDebugSelectEx_SonicActionSettings = (SonicActionSettings*)0x87F830;
 StageToCapitalIdMap* MDebugSelectEx_StageToCapitalMap = (StageToCapitalIdMap*)0x7A9560;
 const size_t MDebugSelectEx_StageToCapitalMap_Size = 0x5A;
@@ -368,10 +366,10 @@ const char* MDebugSelectEx_GetSettingName(int setting, int val)
 }
 
 
-uint32_t*(*MDebugSelectEx_GetInput)(void* unk, int type) = (uint32_t*(*)(void*, int))(0);
-uint32_t* MDebugSelectEx_hkGetInput(void* unk, int type)
+uint32_t*(*MDebugSelectEx_GetInput)(void* unk, int port) = (uint32_t*(*)(void*, int))(0);
+uint32_t* MDebugSelectEx_hkGetInput(void* unk, int port)
 {
-	uint32_t* menuInputs = MDebugSelectEx_GetInput(unk, type);
+	uint32_t* menuInputs = MDebugSelectEx_GetInput(unk, port);
 	uint32_t buttonMask = menuInputs[2];
 	if (buttonMask & 0x0008) // R1
 		bDoingSonicActionSetup = !bDoingSonicActionSetup;
@@ -412,7 +410,7 @@ uint32_t* MDebugSelectEx_hkGetInput(void* unk, int type)
 		MDebugSelectEx_ChangeSetting(MDebugSelectEx_SonicAction_Selection, 1);
 	}
 
-	return controllerDummy;
+	return MDebugSelectEx_GetInput(unk, 1); // use second controller port as a dummy
 }
 
 
