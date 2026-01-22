@@ -136,7 +136,7 @@ void nnExitPrint()
 	*(int*)p_nnsPrintMax = 0;
 }
 
-
+#ifndef __INTELLISENSE__
 __attribute__((noinline)) void nnPrint_hkSetVideoMode(void* obj, int mode, void(*fn)(void*, int))
 {
 	asm volatile("");
@@ -145,6 +145,7 @@ __attribute__((noinline)) void nnPrint_hkSetVideoMode(void* obj, int mode, void(
 	nnInitPrint(PrintBuf, NUM_ITEMS, NULL);
 	nnSetPrintSize(10, 13);
 }
+#endif
 
 void nnPrint_hkSetVideoMode_1(void* obj, int mode)
 {

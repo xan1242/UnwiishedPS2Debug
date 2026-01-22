@@ -6,6 +6,7 @@ void FPSDisplay_EndFrame();
 void FPSDisplay_StartDrawTask();
 void FPSDisplay_EndDrawTask();
 void FPSDisplay_ProfileDrawTask(void* obj, void(*f)(void*));
+uintptr_t FPSDisplay_InstallDrawHook(uintptr_t loc, uintptr_t loc_lo_offset, void* pHook);
 void FPSDisplay_ClearDrawTask();
 void FPSDisplay_Draw();
 void FPSDisplay_SetMode(unsigned int mode);

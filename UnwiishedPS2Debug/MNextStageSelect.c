@@ -10,13 +10,5 @@ void MNextStageSelect_Draw_Hook(void* obj)
 
 void MNextStageSelect_Init()
 {
-	const int idx_vftbl_start = 2;
-	const int vtidx_Draw = idx_vftbl_start + 4;
-
-	uintptr_t loc_4C0684 = 0x4C0684;
-	uintptr_t loc_lobytes = loc_4C0684 + 8;
-	uintptr_t* MNextStageSelect_vftbl = (uintptr_t*)minj_GetPtr(loc_4C0684, loc_lobytes);
-
-	MNextStageSelect_Draw = (void(*)(void*))(MNextStageSelect_vftbl[vtidx_Draw]);
-	MNextStageSelect_vftbl[vtidx_Draw] = (uintptr_t)&MNextStageSelect_Draw_Hook;
+	FPSDisplay_InstallDrawHook(0x4C0684, 8, &MNextStageSelect_Draw_Hook);
 }
