@@ -80,31 +80,31 @@ void MDebugSelectEx_GetStageName(int stageID, char* outBuffer)
 {
 	switch (stageID)
 	{
-		case 175:
+		case 175: // Perfect Dark Gaia
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[8]);
 			return;
-		case 174:
+		case 174: // Egg Dragoon
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[6]);
 			return;
-		case 155:
+		case 155: // Dark Guardian
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[4]);
 			return;
-		case 145:
+		case 145: // Dark Gaia Phoenix
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[3]);
 			return;
-		case 125:
+		case 125: // Dark Moray
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Evil", MDebugSelectEx_SonicAction_BossNames[1]);
 			return;
-		case 75:
+		case 75: // Dark Gaia
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[7]);
 			return;
-		case 65:
+		case 65: // Egg Lancer
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[5]);
 			return;
-		case 35:
+		case 35: // Egg Devil Ray
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[2]);
 			return;
-		case 15:
+		case 15: // Egg Beetle
 			UnwiishedPS2Debug_sprintf(outBuffer, "[%s Boss] %s", "Sonic", MDebugSelectEx_SonicAction_BossNames[0]);
 			return;
 		default:
