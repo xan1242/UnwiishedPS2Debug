@@ -77,8 +77,10 @@ __attribute__((noinline)) uintptr_t FPSDisplay_InstallDrawHook(uintptr_t loc, ui
 	uintptr_t loc_lobytes = loc_hibytes + loc_lo_offset;
 	uintptr_t* vftbl = (uintptr_t*)minj_GetPtr(loc_hibytes, loc_lobytes);
 
-	uintptr_t pDraw = (void(*)(void*))(vftbl[vtidx_Draw]);
+	uintptr_t pDraw = vftbl[vtidx_Draw];
 	vftbl[vtidx_Draw] = (uintptr_t)pHook;
+
+	return pDraw;
 }
 #endif
 

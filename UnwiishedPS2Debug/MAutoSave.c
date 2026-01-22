@@ -10,5 +10,5 @@ void MAutoSave_Draw_Hook(void* obj)
 
 void MAutoSave_Init()
 {
-	FPSDisplay_InstallDrawHook(0x481D10, 8, &MAutoSave_Draw_Hook);
+	MAutoSave_Draw = (void(*)(void*))(FPSDisplay_InstallDrawHook(0x481D10, 8, &MAutoSave_Draw_Hook));
 }

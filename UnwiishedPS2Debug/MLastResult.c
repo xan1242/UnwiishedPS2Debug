@@ -10,13 +10,5 @@ void MLastResult_Draw_Hook(void* obj)
 
 void MLastResult_Init()
 {
-	const int idx_vftbl_start = 2;
-	const int vtidx_Draw = idx_vftbl_start + 4;
-
-	uintptr_t loc_330494 = 0x330494;
-	uintptr_t loc_lobytes = loc_330494 + 8;
-	uintptr_t* MLastResult_vftbl = (uintptr_t*)minj_GetPtr(loc_330494, loc_lobytes);
-
-	MLastResult_Draw = (void(*)(void*))(MLastResult_vftbl[vtidx_Draw]);
-	MLastResult_vftbl[vtidx_Draw] = (uintptr_t)&MLastResult_Draw_Hook;
+	MLastResult_Draw = (void(*)(void*))(FPSDisplay_InstallDrawHook(0x330494, 8, &MLastResult_Draw_Hook));
 }

@@ -1,6 +1,8 @@
 #ifndef FPSDISPLAY_H
 #define FPSDISPLAY_H
 
+#include <stdint.h>
+
 void FPSDisplay_StartFrame();
 void FPSDisplay_EndFrame();
 void FPSDisplay_StartDrawTask();

@@ -10,5 +10,5 @@ void MNextStageSelect_Draw_Hook(void* obj)
 
 void MNextStageSelect_Init()
 {
-	FPSDisplay_InstallDrawHook(0x4C0684, 8, &MNextStageSelect_Draw_Hook);
+	MNextStageSelect_Draw = (void(*)(void*))(FPSDisplay_InstallDrawHook(0x4C0684, 8, &MNextStageSelect_Draw_Hook));
 }

@@ -10,5 +10,5 @@ void MClearResult_Draw_Hook(void* obj)
 
 void MClearResult_Init()
 {
-	FPSDisplay_InstallDrawHook(0x4AD274, 8, &MClearResult_Draw_Hook);
+	(void(*)(void*))(FPSDisplay_InstallDrawHook(0x4AD274, 8, &MClearResult_Draw_Hook));
 }

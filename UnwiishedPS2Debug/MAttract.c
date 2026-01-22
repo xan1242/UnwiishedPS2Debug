@@ -10,5 +10,5 @@ void MAttract_Draw_Hook(void* obj)
 
 void MAttract_Init()
 {
-	FPSDisplay_InstallDrawHook(0x3C7B24, 8, &MAttract_Draw_Hook);
+	MAttract_Draw = (void(*)(void*))(FPSDisplay_InstallDrawHook(0x3C7B24, 8, &MAttract_Draw_Hook));
 }
